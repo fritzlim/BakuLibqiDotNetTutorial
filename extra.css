@@ -1,0 +1,19 @@
+ul code {
+  font-size: 100%;
+}
+
+code, .hljs {
+  font-size: 100%;
+}
+
+code, .rst-content tt {
+  font-size: 80%;
+  color: #4080A0;
+}
+
+.wy-nav-content-wrap {
+  background: #D0D0D0;
+}
+.wy-nav-content {
+  background: #D0D0D0;
+}
