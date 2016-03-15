@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>型の対応 - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "型の対応";
+    var mkdocs_page_input_path = "references\type_rules.md";
+    var mkdocs_page_url = "/references/type_rules/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">型の対応</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#qi-framework">qi Frameworkの型付け</a></li>
+                
+                    <li><a class="toctree-l4" href="#1">1. 型の対応表</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-qivalueqianyvalue">2. QiValueとQiAnyValue</a></li>
+                
+                    <li><a class="toctree-l4" href="#3">3. 暗黙の型変換</a></li>
+                
+                    <li><a class="toctree-l4" href="#4-list-map-tuple">4. コンテナ型(List, Map, Tuple)</a></li>
+                
+                    <li><a class="toctree-l4" href="#5-dyanmic">5. 動的型(Dyanmic)</a></li>
+                
+                    <li><a class="toctree-l4" href="#6-qivaluevoid">6. QiValue.Void</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../troubles/">困ったときに: 低レイヤAPI</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>References &raquo;</li>
+        
+      
+    
+    <li>型の対応</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="qi-framework">qi Frameworkの型付け</h1>
+<hr />
+<p>このページでは、<code>qi Framework</code>の内部で定義されている変数の型を<code>Python</code>の型や<code>Baku.LibqiDotNet</code>の型との互換性という観点で紹介し、特にコンテナ型についても説明を与えます。</p>
+<p><br/><br/></p>
+<h2 id="1">1. 型の対応表</h2>
+<hr />
+<p><strong><a href="http://doc.aldebaran.com/libqi/api/transtyping.html">公式ドキュメント</a></strong>には<code>qi Framework</code>の内部定義型(<code>qiType</code>と呼ばれます)と<code>C++</code>, <code>Python</code>, <code>Java</code>などの型に関する対応が記述されています。以下には<code>qiType, Python, C#</code>間における型の対応づけに加え、厳密に型対応を取るために用意された<code>Baku.LibqiDotNet</code>の型を記載しています。</p>
+<p>一つだけ公式ドキュメントと異なる注意として、下記の表では最下部に<code>Raw</code>型というバイナリデータ型を追記していることに注意してください。</p>
+<table>
+<thead>
+<tr>
+<th>qi Type</th>
+<th>Python</th>
+<th>Baku.LibqiDotNet</th>
+<th>C#</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Void</td>
+<td>NoneType</td>
+<td>QiValue.Void</td>
+<td>void</td>
+</tr>
+<tr>
+<td>Bool</td>
+<td>bool</td>
+<td>QiBool</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>Int8</td>
+<td>int</td>
+<td>QiInt8</td>
+<td>sbyte</td>
+</tr>
+<tr>
+<td>Int16</td>
+<td>int</td>
+<td>QiInt16</td>
+<td>short</td>
+</tr>
+<tr>
+<td>Int32</td>
+<td>int</td>
+<td>QiInt32</td>
+<td>int</td>
+</tr>
+<tr>
+<td>Int64</td>
+<td>int</td>
+<td>QiInt64</td>
+<td>long</td>
+</tr>
+<tr>
+<td>UInt8</td>
+<td>int</td>
+<td>QiUInt8</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>UInt16</td>
+<td>int</td>
+<td>QiUInt16</td>
+<td>ushort</td>
+</tr>
+<tr>
+<td>UInt32</td>
+<td>int</td>
+<td>QiUInt32</td>
+<td>uint</td>
+</tr>
+<tr>
+<td>UInt64</td>
+<td>int</td>
+<td>QiUInt64</td>
+<td>ulong</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>float</td>
+<td>QiFloat</td>
+<td>float</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>float</td>
+<td>QiDouble</td>
+<td>double</td>
+</tr>
+<tr>
+<td>String</td>
+<td>str</td>
+<td>QiString</td>
+<td>string</td>
+</tr>
+<tr>
+<td>List<T></td>
+<td>list</td>
+<td>QiList<T></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Mat<T,U></td>
+<td>dict</td>
+<td>QiMap<T,U></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Object</td>
+<td><em>class instance</em></td>
+<td>QiObject</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Value</td>
+<td><em>underlying type</em></td>
+<td>QiDynamic</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Raw</td>
+<td>str</td>
+<td>QiByteData</td>
+<td>byte[]</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/></p>
+<h2 id="2-qivalueqianyvalue">2. QiValueとQiAnyValue</h2>
+<hr />
+<p><code>Baku.LibqiDotNet</code>では<code>qi Framework</code>の機能をラップするために<code>QiValue</code>と<code>QiAnyValue</code>という二種類のクラスを用いています。</p>
+<p>前者の<code>QiValue</code>クラスは<code>qi Framework</code>のデータに相当する生のポインターを保持するクラスです。サービスをロードして関数を呼び出すと、その結果は全て<code>QiValue</code>型の変数にいったん集約されます。つまり、<code>QiValue</code>は外部から受信したデータを表すクラスです。</p>
+<p><br/>
+<code>QiValue</code>型変数が実際に保持する値の型は実行時に確認するか、事前に把握しておく必要があります。特に組み込み型を通常はドキュメンテーションから呼び出す関数の戻り値が分かっているため、その型を指定することで出力値を組み込み型(<code>int</code>など)に変換することが可能です。具体例については<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>を参照してください。</p>
+<p><br/>
+後者の<code>QiAnyValue</code>クラスは<code>QiValue</code>と対照的なクラスです。<code>QiValue</code>が関数の戻り値を表すのに対し、<code>QiAnyValue</code>は<code>qi Framework</code>の関数へ入力可能な値の基底となるクラスです。上記の表で<code>Baku.LibqiDotNet</code>の型として記載されているものは<code>QiValue.Void</code>静的プロパティと<code>QiObject</code>型を除けば全てが<code>QiAnyValue</code>型の派生クラスです。</p>
+<p><br/>
+<code>QiAnyValue</code>の派生型の多くは通常のコンストラクタを用いて作成できます。例えば、次のようなコードが実行可能です。</p>
+<pre><code class="csharp">QiAnyValue s = new QiString(&quot;Create QiString value from string&quot;);
+
+//もちろんこう書くことも出来る
+QiString s2 = new QiString(&quot;Create QiString value from string&quot;);
+var s3 = new QiString(&quot;Create QiString value from string&quot;);
+</code></pre>
+
+<p><br/><br/></p>
+<h2 id="3">3. 暗黙の型変換</h2>
+<p>前節で示した通り<code>QiAnyValue</code>の派生型は通常のコンストラクタを用いて作成できます。しかし常にこのような書き方をするとコードが煩雑になってしまいます。</p>
+<p>例えば、ロボットのカメラから画像を取得する設定を行う<code>ALVideoDevice</code>の<code>subscribeCamera</code>関数は次のようなシグネチャを持っています。</p>
+<pre><code>string subscribeCamera(string id, int cameraType, int resolution, int colorspace, int fps);
+</code></pre>
+
+<p>ただ<code>string</code>や<code>int</code>と書いているのは略記で、正式には<code>QiString</code>や<code>QiInt32</code>などの<code>Baku.LibqiDotNet</code>で定義された型です。したがって、このを正式な方法で呼び出すと次のように書けます。</p>
+<pre><code class="csharp">var video = session.GetService(&quot;ALVideoDevice&quot;);
+string idName = (string)video[&quot;subscribeCamera&quot;].Call(
+    new QiString(&quot;Hoge&quot;),
+    new QiInt32(0),
+    new QiInt32(1),
+    new QiInt32(11),
+    new QiInt32(10)
+    );
+</code></pre>
+
+<p><br/>
+上記のコードはより簡潔に、次のように書くこともできます。</p>
+<pre><code class="csharp">var video = session.GetService(&quot;ALVideoDevice&quot;);
+string idName = video[&quot;subscribeCamera&quot;].Call(&quot;Hoge&quot;, 0, 1, 11, 10);
+</code></pre>
+
+<p><br/>
+このように記述できるのは、<code>Call</code>関数が<code>QiAnyValue</code>の派生型変数を引数としており、さらに<code>QiAnyValue</code>クラスが暗黙のキャストによって<code>string</code>や<code>int</code>を適切に変換するためです。たとえば<code>string</code>に対する暗黙のキャストは次のように実装されています。</p>
+<pre><code class="csharp">class QiAnyValue
+{
+    //...
+
+    public static implicit operator QiAnyValue(string x) =&gt; new QiString(x);
+}
+</code></pre>
+
+<p><br/>
+他の組み込み型等についても同様で、<a href="#1"><strong>型の対応表</strong></a>に記載された<code>bool, string, byte[]</code>と整数型、小数型のそれぞれについては暗黙のキャストが可能です。使用頻度が高いと想定される<code>int[], double[], string[]</code>についても暗黙のキャストをサポートしています。したがって、見かけ上はこれら組み込み型(と一部の配列)に関してはそのまま引数に代入することが出来ます。逆に、二重リスト(リストのリスト)のような複雑なデータ構造を指定する場合はキャストは利用できないため、<code>QiAnyValue</code>の派生型のコンストラクタやファクトリメソッドを用いて正しくインスタンスを生成してください。二重リストを用いる具体例は<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>で紹介しています。</p>
+<p><br/><br/></p>
+<h2 id="4-list-map-tuple">4. コンテナ型(List, Map, Tuple)</h2>
+<p><code>qi Framework</code>は3種類のコンテナ型をサポートしていますが、実態としては配列型データを表す<code>QiList&lt;T&gt;</code>が非常に多く用いられており、辞書式データを表す<code>QiMap</code>はまず使われません。タプルを表現する<code>QiTuple</code>についても、イベントのコールバックで<code>Tuple</code>を渡される(<a href="../../tutorials/memory/"><strong>ALMemoryの使い方</strong></a>等参照)ような珍しいケースを除けば扱わないデータ型です。またタプルからのデータ読み取りは<code>QiList&lt;T&gt;</code>からのデータ読み取りとほとんど変わりません。したがって、ここでは配列型のデータ構造である<code>QiList&lt;T&gt;</code>に焦点を絞って紹介します。</p>
+<p><br/>
+何度も書いていますが、配列型のデータ構造は<code>QiList&lt;T&gt;</code>であり、これはジェネリッククラスです。<code>T</code>は<code>QiAnyValue</code>の派生型である必要があります。<code>Baku.LibqiDotNet</code>には非ジェネリックな<code>QiList</code>というクラスも存在しますが、これは静的クラスで、単に<code>QiList&lt;T&gt;</code>を作成するファクトリメソッドを定義しただけのクラスです。</p>
+<p><br/>
+<code>QiList&lt;T&gt;</code>を作成するには<code>QiList.Create</code>関数を用いるのが最も簡単です。入れ子リストを作るような複雑な例については<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>に記載していますが、ここではより典型的な1次元配列を作る方法を紹介します。</p>
+<p>(続きを書く予定ですが現状では未整備です)</p>
+<p><br/><br/></p>
+<h2 id="5-dyanmic">5. 動的型(Dyanmic)</h2>
+<p>先に忠告しておきますが、これは<code>C#</code>の<code>dynamic</code>とはまったく違います！<code>qi Framework</code>の<code>Dynamic</code>が提供する機能はより単純ですが、その分言語に依存していない便利な機構です。<code>Dynamic</code>は1要素のリストあるいはタプルとみなすことが出来る、ある種のコンテナクラスです。ただし<code>QiList&lt;T&gt;</code>やタプル(<code>QiTuple</code>)と異なり、<code>Dynamic</code>は任意の型のデータを保持できるという特徴があります。以下は実際には動作しない疑似コードですが、コンセプトとして次のような処理が可能です。</p>
+<pre><code>var qid = new QiFramework.Dynamic(new QiInt32(10));
+var x = qid.Value; //xはQiInt32型の変数
+
+b.Value = new QiString(&quot;Hello!&quot;);
+var y = qid.Value; //yはQiString型の変数
+
+b.Value = new QiBool(false);
+var z = qid.Value; //zはQiBool型の変数
+</code></pre>
+
+<p><br/>
+上の例では<code>Value</code>プロパティに次々と異なる型の変数を代入し、取り出しています。<code>qid</code>変数自体の型は<code>Dynamic</code>のまま不変ですが、<code>Value</code>へのアクセスによって見かけ上型が動的に変化しているように扱えていることが分かります。</p>
+<p><br/>
+<code>Dynamic</code>型は<code>qi Framework</code>において、事前に渡される関数のシグネチャが固定しづらい時に利用されています。例えば運動を制御する<code>ALMotion</code>では指定した関節の目標となる角度値を指定できる<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::setAngles__AL::ALValueCR.AL::ALValueCR.floatCR"><code>setAngles</code></a>関数がありますが、この関数は内部的に2種類のオーバーロードを持っており、シグネチャがおよそ次のようになっています。</p>
+<pre><code>void setAngles(QiString name, Dynamic angles, Dynamic fraction);
+void setAngles(QiList&lt;QiString&gt; names, Dynamic angles, Dynamic fraction);
+</code></pre>
+
+<p><br/>
+ドキュメンテーションを読むと分かるのですが、実際には上記の<code>Dynamic</code>部分には単一の<code>double</code>値か<code>double[]</code>が渡されます。<code>Dynamic</code>を使わなかった場合、上記関数のオーバーロードは(第一引数、第二引数、第三引数がいずれも2パタンずつあるので)8個ほど必要だったことがうかがい知れます。<code>Dynamic</code>を用いた型の制約緩和によって、オーバーロードの個数を減らせていることは注目に値するでしょう。</p>
+<p>(<code>Dynamic</code>の話題についてはもっと紹介する予定ですが、現状では未整備です)</p>
+<p><br/><br/></p>
+<h2 id="6-qivaluevoid">6. QiValue.Void</h2>
+<p><code>QiValue.Void</code>は<code>QiValue</code>クラスの静的プロパティです。<code>null</code>に近いような意味があり、<code>qi Framework</code>における関数の戻り値として「何も返さない」というのを表す値です。</p>
+<p>通常のプログラムではこの値を呼び出す必要はありません。例えば<code>ALTextToSpeech</code>の<code>say</code>関数は戻り値が無い関数ですが、これを呼び出すときは単に次のように記述すれば動作するため、<code>Call</code>関数の結果<code>QiValue.Void</code>相当の値であることを意識する必要はほとんどありません。</p>
+<pre><code class="csharp">var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+tts[&quot;say&quot;].Call(&quot;Hello.&quot;);
+</code></pre>
+
+<p><br/>
+ただし<a href="../../tutorials/create_service/"><strong>サービスを自作する</strong></a>際には戻り値が無い関数を定義したい場合があり、<code>QiValue.Void</code>はこのような状況に対して用います。これについてはチュートリアルで例を確認してください。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../troubles/" class="btn btn-neutral float-right" title="困ったときに: 低レイヤAPI">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../tutorials/create_service/" class="btn btn-neutral" title="サービスの自作"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../tutorials/create_service/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../troubles/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

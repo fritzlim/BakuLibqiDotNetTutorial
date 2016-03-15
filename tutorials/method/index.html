@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>関数の呼び出し - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "関数の呼び出し";
+    var mkdocs_page_input_path = "tutorials\method.md";
+    var mkdocs_page_url = "/tutorials/method/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">関数の呼び出し</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#how-to-call-method">How to Call Method</a></li>
+                
+                    <li><a class="toctree-l4" href="#1">1. コンソールアプリケーションの準備</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-wakeuprest">2. もっともシンプルな呼び出し: wakeUpとrest</a></li>
+                
+                    <li><a class="toctree-l4" href="#3">3. 関数の結果を受け取る</a></li>
+                
+                    <li><a class="toctree-l4" href="#4-getangles">4. キャストを用いず複雑な戻り値を得る: getAngles関数</a></li>
+                
+                    <li><a class="toctree-l4" href="#5-angleinterpolation">5. 複雑な引数を渡す: angleInterpolation関数</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/troubles/">困ったときに: 低レイヤAPI</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>関数の呼び出し</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="how-to-call-method">How to Call Method</h1>
+<p>このページでは、<code>Baku.LibqiDotNet</code>において<code>qi Framework</code>のサービス上の関数を呼び出す一般的な手順を、実際のロボットに適用できるサンプルを用いて紹介します。</p>
+<p><br/></p>
+<p>本サンプルではロボットのモーションに関するサービスである<a href="http://doc.aldebaran.com/2-1/naoqi/motion/almotion.html"><code>ALMotion</code></a>を用いて、現在のロボットの状態を取得したり、逆に特定のポーズを指示するプログラムを作成します。本チュートリアルは実機のロボットだけでなく仮想ロボットでも検証可能です。</p>
+<p><br/><br/></p>
+<h2 id="1">1. コンソールアプリケーションの準備</h2>
+<hr />
+<p><a href="../hello_world/">Hello World</a>の手順に沿ってコンソールアプリケーションを準備します。</p>
+<p><br/><br/></p>
+<h2 id="2-wakeuprest">2. もっともシンプルな呼び出し: wakeUpとrest</h2>
+<hr />
+<p>本チュートリアルでは少しずつコードを書き足しながら動作を確認していきます。まず、本チュートリアルで利用する<code>ALMotion</code>モジュールをロードし、ロボットのアクチュエータを起動し、また停止する処理を行ってみましょう。このような処理は<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-stiffness-api.html#ALMotionProxy::wakeUp"><code>wakeUp</code></a>関数と<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-stiffness-api.html#ALMotionProxy::rest"><code>rest</code></a>関数を順に呼び出すことで実装できます。</p>
+<p><br/>
+以下では<code>Program.cs</code>のみを含むコンソールアプリケーションを想定し、簡単のため<code>using</code>文と<code>Main</code>関数のみを記述します。また接続先となるロボットのアドレスは適切に指定してください。</p>
+<pre><code class="csharp">using System;
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    //HelloWorldの対象とするマシンのアドレスをIPとポート(ポートは通常9559)で指定
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var motion = session.GetService(&quot;ALMotion&quot;);
+
+    motion[&quot;wakeUp&quot;].Call();
+    motion[&quot;rest&quot;].Call();
+}
+</code></pre>
+
+<p><br/>
+このプログラムを動作させると、ロボットのアクチュエータが起動していない場合は起動を行い、その後再びアクチュエータを休止させます。</p>
+<p><br/><br/></p>
+<h2 id="3">3. 関数の結果を受け取る</h2>
+<hr />
+<p>上の例では戻り値がない関数を呼び出しました。次は戻り値がある関数を利用してみましょう。たとえば<code>ALMotion</code>モジュールでは、現在のロボットの姿勢情報を単一の要約文テキストとして取得する<a href="http://doc.aldebaran.com/2-1/naoqi/motion/tools-general-api.html?highlight=getsummary#ALMotionProxy::getSummary"><code>getSummary</code></a>関数があります。</p>
+<pre><code class="csharp">string getSummary();
+</code></pre>
+
+<p><br/>
+この関数を利用するコードは次のようになります。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var motion = session.GetService(&quot;ALMotion&quot;);
+
+    string summary = (string)motion[&quot;getSummary&quot;].Call();
+
+    Console.WriteLine(summary);
+}
+</code></pre>
+
+<p><br/>
+出力例は次の通りです(最上部に警告を示す<code>[W]</code>から始まる出力が出ていますが無視して構いません)。</p>
+<pre><code>[W] 1457718290.352819 14000 qi.path.sdklayout: No Application was created, trying to deduce paths
+---------------------- Model ---------------------------
+        BodyName   Stiffness     Command      Sensor
+         HeadYaw    0.000000   -0.000000   -0.000000
+       HeadPitch    0.000000    0.637000    0.637000
+  LShoulderPitch    0.000000    1.133252    1.133252
+   LShoulderRoll    0.000000    0.059364    0.059364
+       LElbowYaw    0.000000   -0.491643   -0.491643
+      LElbowRoll    0.000000   -0.008727   -0.008727
+       LWristYaw    0.000000   -0.801464   -0.801464
+         HipRoll    0.000000    0.000000    0.000000
+        HipPitch    0.000000   -1.038400   -1.038400
+       KneePitch    0.000000    0.510000    0.510000
+  RShoulderPitch    0.000000    1.133252    1.133252
+   RShoulderRoll    0.000000   -0.059364   -0.059364
+       RElbowYaw    0.000000    0.491643    0.491643
+      RElbowRoll    0.000000    0.008727    0.008727
+       RWristYaw    0.000000    0.801464    0.801464
+           LHand    0.000000    0.600000    0.600000
+           RHand    0.000000    0.600000    0.600000
+         WheelFL    0.000000    0.000000    0.000000
+         WheelFR    0.000000    0.000000    0.000000
+          WheelB    0.000000    0.000000    0.000000
+---------------------- Tasks  --------------------------
+            Name         ID
+----------------- Motion Cycle Time --------------------
+              20 ms
+</code></pre>
+
+<p><br/>
+改行を含むサマリー文字列が正しく取得出来ています。もう一度関数呼び出しの部分を再掲しますが、ここでは呼び出し結果に対してキャストを行っています。</p>
+<pre><code class="csharp">string summary = (string)motion[&quot;getSummary&quot;].Call();
+</code></pre>
+
+<p><br/>
+関数の呼び出し結果は<code>QiValue</code>型の変数です。この変数は<code>qi Framework</code>から渡される全ての変数の派生元である(ように見える)クラスです。本質的にこの変数が保持するデータは整数値、文字列やリスト構造など<code>C#</code>でもお馴染みのデータですが、とくに組み込み型を含むいくつかの型への変換は頻繁に必要となるため、上述のようなキャスト演算によって値を取得できるようになっています。</p>
+<p><br/><br/></p>
+<h2 id="4-getangles">4. キャストを用いず複雑な戻り値を得る: getAngles関数</h2>
+<hr />
+<p>前節の例では<code>string</code>型の戻り値を持つ関数をキャスト操作によって取得出来る事を紹介しました。以下の型の変数は<code>QiValue</code>からのキャストによって得られます。</p>
+<ul>
+<li>論理値(<code>bool</code>)</li>
+<li>整数(<code>int, long, short, sbyte, uint, ulong, ushort, byte</code>)</li>
+<li>小数(<code>float, double</code>)</li>
+<li>文字列(<code>string</code>)</li>
+<li>配列(<code>int[], double[], string[]</code>)</li>
+<li>バイナリ(<code>byte[]</code>)</li>
+</ul>
+<p><br/></p>
+<p>しかし上記のキャストが出来ないような、複雑な戻り値を持った関数を呼び出した場合はどうすればよいのでしょうか？例を示すため、ここではキャスト可能な戻り値を<strong>あえてキャスト以外の方法で</strong>パースしてみます。下記の例では<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::getAngles__AL::ALValueCR.bCR"><code>getAngles</code></a>関数を用い、ロボットの各関節の角度を小数の配列として取得しています。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(&quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var motion = session.GetService(&quot;ALMotion&quot;);
+
+    //キャストを用いた方法
+    double[] angles = (double[])motion[&quot;getAngles&quot;].Call(&quot;Body&quot;, true);
+
+    //キャストを用いない方法
+    QiValue result = motion[&quot;getAngles&quot;].Call(&quot;Body&quot;, true);
+    var angles2 = new double[result.Count];
+    for (int i = 0; i &lt; angles2.Length; i++)
+    {
+        angles2[i] = (double)result[i];
+    }
+
+    //同じ値が取得できているかチェックしてみよう！
+    for (int i = 0;i &lt; angles.Length; i++)
+    {
+        Console.WriteLine(angles[i]);
+        Console.WriteLine(angles2[i]);
+    }
+
+}
+</code></pre>
+
+<p><br/>
+キャストを用いない方法では<code>QiValue.Count</code>プロパティにアクセスすることで配列の長さを取得し、インデックスを指定することで配列の各要素を取り出しています。<code>Count</code>プロパティは<code>QiValue</code>の実際の内容が配列などである場合は要素数を表し、それ以外の場合<code>Count</code>の値は単に<code>0</code>になります。</p>
+<p>私がこの例を試した所、次のような出力が得られました。</p>
+<pre><code>[W] 1457719018.860709 11624 qi.path.sdklayout: No Application was created, trying to deduce paths
+-5.6843418860808E-14
+-5.6843418860808E-14
+0.637000024318695
+0.637000024318695
+1.13325190544128
+1.13325190544128
+0.0593636594712734
+0.0593636594712734
+-0.491642862558365
+-0.491642862558365
+-0.00872664619237185
+-0.00872664619237185
+-0.801463842391968
+-0.801463842391968
+0.600000023841858
+0.600000023841858
+0
+0
+-1.03840005397797
+-1.03840005397797
+0.509999990463257
+0.509999990463257
+1.13325190544128
+1.13325190544128
+-0.0593636594712734
+-0.0593636594712734
+0.491642862558365
+0.491642862558365
+0.00872664619237185
+0.00872664619237185
+0.801463842391968
+0.801463842391968
+0.600000023841858
+0.600000023841858
+0
+0
+0
+0
+0
+0
+</code></pre>
+
+<p>どちらの方法でも同じ結果が得られている事が分かります。今回の例では<code>QiValue</code>をわざわざ操作する意義があまり感じられなかったと思いますが、配列の要素ごとに異なる型のデータが入ったようなデータを受け取る場合<code>QiValue</code>の直接操作が必要となります。この具体例に関してはGitHubのソースコードに<a href="https://github.com/malaybaku/BakuLibQiDotNet/blob/master/Baku.LibqiDotNet/StandardSamples/VisionRetrieveImage.cs">カメラ画像を取得する例</a>が含まれているので参考にしてください。</p>
+<p><br/><br/></p>
+<h2 id="5-angleinterpolation">5. 複雑な引数を渡す: angleInterpolation関数</h2>
+<hr />
+<p>前節では関数の<strong>戻り値</strong>が複雑であるケースのための処理を紹介しました。今度は関数の<strong>引数</strong>が複雑な場合に対応することを考えてみましょう。今回は具体例として、ロボットの動きを自動で補間する<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::angleInterpolation__AL::ALValueCR.AL::ALValueCR.AL::ALValueCR.bCR"><code>angleInterpolation</code></a>関数のサンプルを<code>C#</code>で動かしてみましょう。</p>
+<p>この関数の仕様はドキュメンテーションに記載されていますが、それより大切なのは、この関数を使う場合に入れ子配列のデータ構造が必要ということです。たとえば<code>Python</code>のサンプルコードを抜粋すると次のようなプログラムが書かれています。</p>
+<pre><code class="python">names  = [&quot;Head&quot;]
+angleLists  = [[50.0*almath.TO_RAD, 0.0],
+               [-30.0*almath.TO_RAD, 30.0*almath.TO_RAD, 0.0]]
+timeLists   = [[1.0, 2.0], [ 1.0, 2.0, 3.0]]
+
+motionProxy.angleInterpolationBezier(names, timeLists, angleLists)
+</code></pre>
+
+<p><br/>
+<code>almath.TO_RAD</code>は度数法をラジアン法に変換している定数なので大した意味はありません。ポイントになるのは<code>angleLists</code>や<code>timeLists</code>がリストのリストであるという点です。この処理を<code>C#</code>で行う場合、コードは次のようになります。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var motion = session.GetService(&quot;ALMotion&quot;);
+
+    double toRad = Math.PI / 180.0;
+
+    QiList&lt;QiString&gt; names 
+        = QiList.Create(new string[] { &quot;HeadYaw&quot;, &quot;HeadPitch&quot; });
+
+    QiList&lt;QiList&lt;QiDouble&gt;&gt; angleLists
+        = QiList.Create&lt;QiList&lt;QiDouble&gt;&gt;(new QiList&lt;QiDouble&gt;[]
+    {
+        QiList.Create(new double[] { 30.0 * toRad, 0.0 }),
+        QiList.Create(new double[] { -30.0 * toRad, 30.0 * toRad, 0.0 })
+    });
+
+    QiList&lt;QiList&lt;QiDouble&gt;&gt; timeLists
+        = QiList.Create&lt;QiList&lt;QiDouble&gt;&gt;(new QiList&lt;QiDouble&gt;[]
+    {
+        QiList.Create(new double[] { 1.0, 2.0 }),
+        QiList.Create(new double[] { 1.0, 2.0, 3.0 })
+    });
+
+    QiBool isAbsolute = new QiBool(true);
+
+    motion[&quot;angleInterpolation&quot;].Call(names, angleLists, timeLists, isAbsolute);
+}
+</code></pre>
+
+<p><br/>
+これを実行するとロボットの首が左上、下、正面を順に向きます。</p>
+<p><br/></p>
+<p>上記のプログラムでは今まで現れなかったクラス名がいくつか現れています。とはいえ<code>QiList, QiString, QiDouble, QiBool</code>などの型名からこれらが何を意味するのかは想像がつくでしょうし、経験のあるプログラマであれば<code>QiList&lt;QiList&lt;QiDouble&gt;&gt;</code>が小数の二次元配列データを表すこともすぐ納得できるでしょう(※上のコードでは<code>var</code>キーワードの使用を意図的に控えて冗長な表現を行っていますが、これは型が分かりやすいように示しているだけです。リファクタリングされたコードは後述します)。<code>QiList&lt;T&gt;</code>型の変数を生成しているのは<code>QiList.Create</code>関数です。この関数は実際のユースケースを想定して大量にオーバーロードが定義されていますが、これについてはVisual Studio上でインテリセンスとにらみ合って確認すれば済む話題ですから詳しくは触れません。</p>
+<p><br/></p>
+<p>それよりも問題なのは<code>Call</code>関数の仕組みです。せっかくなので、今まで何となく使っていた<code>Call</code>関数の正式なシグネチャを確認しましょう。シグネチャは下記の通りです。</p>
+<pre><code class="csharp">class QiMethod
+{
+    public QiValue Call(params QiAnyValue[] args) { /* 実装 */ }
+}
+</code></pre>
+
+<p><br/>
+<code>Call</code>関数は可変個の<code>QiAnyValue</code>型変数を引数に取ります。<code>QiAnyValue</code>クラスは<code>QiValue</code>クラスと類似したクラスですが、<code>QiValue</code>が関数の戻り値の基底を表していたのとは対照的に、<code>QiAnyValue</code>クラスは関数への入力に用いる値の基底を表します。</p>
+<p><br/>
+ご想像の通り、上記のコードで使っている<code>QiString, QiBool, QiDouble</code>などは全て<code>QiAnyValue</code>の派生型です。<code>QiList&lt;T&gt;</code>(<code>T</code>は<code>QiAnyValue</code>の派生型)も<code>QiAnyValue</code>から派生しています。以上から、適切なデータを関数の引数に渡す手順は</p>
+<ol>
+<li><code>Qi**</code>という<code>QiAnyValue</code>から派生した型の変数を作成</li>
+<li>適切な関数名を指定し、<code>Call</code>関数に適切な順番で引数を渡す</li>
+</ol>
+<p><br/>
+というシンプルなものであることが分かりました。一件落着です</p>
+<p><br/><br/>
+…いや、ちょっと待ってください。ひとつ引っかかる事があります。<a href="../hello_world/">Hello World</a>プログラムを思い出して欲しいのですが、このプログラムでは次のようなコードを書いていました。</p>
+<pre><code class="csharp">//最も基本的なモジュールの一つとして合成音声のモジュールを取得
+var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+
+//&quot;say&quot;関数に文字列引数を指定して実行
+tts[&quot;say&quot;].Call(&quot;this is test&quot;);
+</code></pre>
+
+<p><br/>
+<code>QiAnyValue</code>の派生型ではなく単なる文字列を渡せています。なぜでしょうか？</p>
+<p><br/>
+これは仕掛けが分かってしまえば簡単な話なのですが、<code>QiAnyValue</code>クラスはいくつかの暗黙型キャストが<a href="https://msdn.microsoft.com/ja-jp/library/85w54y0a.aspx"><code>implicit operator</code></a>で定義されています。例をいくつか紹介します。</p>
+<pre><code class="csharp">public abstract class QiAnyValue
+{
+    public static operator QiAnyValue(bool v) =&gt; new QiBool(v);
+    public static operator QiAnyValue(int v) =&gt; new QiInt32(v);
+    public static operator QiAnyValue(string v) =&gt; new QiString(v);
+}
+</code></pre>
+
+<p><br/>
+このような定義があるため、下記の呼び出し</p>
+<pre><code class="csharp">tts[&quot;say&quot;].Call(&quot;this is test&quot;);
+</code></pre>
+
+<p><br/>
+これは実際には次のコードと同様に扱われます。</p>
+<pre><code class="csharp">tts[&quot;say&quot;].Call(new QiString(&quot;this is test&quot;));
+</code></pre>
+
+<p><br/></p>
+<p>暗黙の型変換がサポートされている型は論理値、整数型、小数型とバイナリデータを表す<code>byte[]</code>、また利用頻度がそれなりに高いと思われる<code>int[], string[], double[]</code>です。これを踏まえたうえで先程の<code>angleInterpolation</code>を用いたコードを書き直してみると、より簡潔にまとめる事が出来ます。</p>
+<pre><code class="csharp">
+PathModifier.AddEnvironmentPath(
+    &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+var session = QiSession.Create(address);
+
+var motion = session.GetService(&quot;ALMotion&quot;);
+
+double toRad = Math.PI / 180.0;
+
+var names = new string[] { &quot;HeadYaw&quot;, &quot;HeadPitch&quot; };
+
+var angleLists = QiList.Create(new []
+{
+    QiList.Create(new double[] { 30.0 * toRad, 0.0 }),
+    QiList.Create(new double[] { -30.0 * toRad, 30.0 * toRad, 0.0 })
+});
+
+var timeLists = QiList.Create(new []
+{
+    QiList.Create(new double[] { 1.0, 2.0 }),
+    QiList.Create(new double[] { 1.0, 2.0, 3.0 })
+});
+
+motion[&quot;angleInterpolation&quot;].Call(names, angleLists, timeLists, true);
+</code></pre>
+
+<p><br/>
+<code>true</code>が<code>new QiBool(true)</code>へ変換され、<code>names</code>も<code>QiList&lt;QiString&gt;</code>に適切に変換されます。入れ子配列の難しいデータ構造以外では組み込み型をそのまま渡せるので、簡潔なコードを書く場合は意識的にこの機能を活用してください。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../memory/" class="btn btn-neutral float-right" title="ALMemoryの使い方">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../hello_world/" class="btn btn-neutral" title="Hello World"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../hello_world/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../memory/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

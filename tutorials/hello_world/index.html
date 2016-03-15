@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>Hello World - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Hello World";
+    var mkdocs_page_input_path = "tutorials\hello_world.md";
+    var mkdocs_page_url = "/tutorials/hello_world/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Hello World</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#1-hello-world">1. Hello Worldプログラムの作成</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-1">1-1. プロジェクトの作成パッケージの取得</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-2">1-2. パッケージの取得とビルド設定の変更</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-3">1-3. プログラムの作成と実行</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#2">2. プログラムの動作</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-1">2-1. アンマネージライブラリの探索パス追加</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-2">2-2. セッションの接続</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-3">2-3. サービスのロードと関数呼び出し</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-4">2-4. セッションの破棄とリソース解放</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#x86">補足:ターゲットをx86とすべき理由</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/troubles/">困ったときに: 低レイヤAPI</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>Hello World</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>ここでは<code>Baku.LibqiDotNet</code>を用いたシンプルなHello Worldプロジェクトを作成し、ライブラリの基本的な使用方法を追っていきます。</p>
+<p><br/>
+想定環境</p>
+<ul>
+<li>Windows 8/8.1/10 (7でも多分OK)</li>
+<li>Visual Studio 2015 </li>
+<li>接続可能な実機のロボット、または仮想ロボット</li>
+</ul>
+<p>仮想ロボットは<code>Choregraphe</code>がインストールされているマシン上であれば作成可能です。仮想ロボットの利用方法についてはWeb上で検索してください。</p>
+<p><br/> <br/></p>
+<h1 id="1-hello-world">1. Hello Worldプログラムの作成</h1>
+<p>はじめにライブラリの配置と動作を確認するため、具体的な手順を追ってロボットに"Hello World"を発話させるテストを行いましょう。</p>
+<p><br/> <br/></p>
+<h2 id="1-1">1-1. プロジェクトの作成パッケージの取得</h2>
+<hr />
+<p>Visual Studio 2015を起動し、コンソールアプリケーションを作成します。今回は簡単な例を示すためコンソールアプリケーションを作成しますが、<code>Baku.LibqiDotNet</code>はアンマネージライブラリと連携する事を除いて動作に関する制約がほとんど無いため、実際はWindows Form, WPFアプリケーション, Unity等にも対応します。</p>
+<p><br/> <br/></p>
+<h2 id="1-2">1-2. パッケージの取得とビルド設定の変更</h2>
+<hr />
+<p>プロジェクトの作成が完了したらソリューションエクスプローラを開き、プロジェクトの「参照」から「NuGetパッケージの管理」を選択してパッケージ管理画面を開きます。</p>
+<p>「参照」タブを選択して<code>Baku.LibqiDotnet</code>で検索するとパッケージがヒットするので、インストールしてください。インストール処理によって<code>Baku.LibqiDotNet.dll</code>がダウンロードされて参照ライブラリに追加されるとともに、ソリューションに<code>dlls</code>フォルダが追加されます。このフォルダには<code>Baku.LibqiDotNet.dll</code>が呼び出すためのアンマネージライブラリが含まれています。</p>
+<p><em>NOTE: 下記の処理は必須ではありませんが推奨されています。</em></p>
+<p>メニューバーで<code>ビルド</code>から<code>構成マネージャ</code>を選び、ダイアログ右上の「アクティブソリューションプラットフォーム」から&lt;新規作成&gt;を選択します。新しいソリューションプラットフォームとして<code>x86</code>を選択し、OKとします。</p>
+<p><br/> <br/></p>
+<h2 id="1-3">1-3. プログラムの作成と実行</h2>
+<p>上記の準備が終わった状態でメインプログラムを作成します。以下では<code>address</code>としてロボットのIPアドレスを指定していますが、このアドレスは環境によって異なるため、事前にIPアドレスを確認して適宜書き換えてください。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //作業ディレクトリだけでなく&quot;dlls&quot;というフォルダのライブラリも実行中に参照できるよう設定を変更
+            PathModifier.AddEnvironmentPath(&quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+            //HelloWorldの対象とするマシンのアドレスをIPとポート(ポートは通常9559)で指定
+            string address = &quot;tcp://127.0.0.1:9559&quot;;
+            var session = QiSession.Create(address);
+
+            Console.WriteLine($&quot;Connected? {session.IsConnected}&quot;);
+            if (!session.IsConnected)
+            {
+                Console.WriteLine(&quot;end program because there is no connection&quot;);
+                return;
+            }
+
+            //最も基本的なモジュールの一つとして合成音声のモジュールを取得
+            var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+
+            //&quot;say&quot;関数に文字列引数を指定して実行
+            tts[&quot;say&quot;].Call(&quot;this is test&quot;);
+
+            session.Close();
+            session.Destroy();
+        }
+    }
+}
+</code></pre>
+
+<p>これを実行し、うまく動作するとロボットが<em>"this is test"</em>と発話します。</p>
+<p><br/><br/></p>
+<h1 id="2">2. プログラムの動作</h1>
+<p>上記のプログラムについて、コードで行われた処理を順に見ていきましょう。</p>
+<p><br/><br/></p>
+<h2 id="2-1">2-1. アンマネージライブラリの探索パス追加</h2>
+<p>アプリケーション本来の動作を開始する前にアンマネージライブラリ群を参照可能にします。</p>
+<pre><code>using Baku.LibqiDotNet.Path;
+
+//作業ディレクトリだけでなく&quot;dlls&quot;というフォルダのライブラリも実行中に参照できるよう設定を変更
+PathModifier.AddEnvironmentPath(&quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+</code></pre>
+
+<p><br/></p>
+<p>本チュートリアルの手順に従ってビルドされたプログラムの実行ディレクトリには<code>dlls</code>というフォルダが作成されます。このフォルダ以下には<code>libqi</code>の本体となるライブラリ群が格納されています。これらのファイルはソリューション内の<code>dlls</code>フォルダ以下からビルド時にローカルコピーされています。</p>
+<p><br/></p>
+<p>つまりライブラリは実行ディレクトリそのものには配置されないため、デフォルトの実行状態では実行ファイルから見つけることが出来ません。これを解決しているのが上記のコードです。</p>
+<p><br/></p>
+<p>あまり推奨はしていませんが、たとえば<code>dlls</code>フォルダ以下のライブラリを全て実行ディレクトリにコピーした場合、この処理は必要ありません(ただし実行ディレクトリにexe以外のライブラリが散らかるので見た目に悪くなります)。</p>
+<p><br/><br/></p>
+<h2 id="2-2">2-2. セッションの接続</h2>
+<hr />
+<p>接続先アドレスを指定して実機、あるいはシミュレートされたロボットに接続します。</p>
+<pre><code class="csharp">using Baku.LibqiDotNet;
+
+string address = &quot;tcp://127.0.0.1:9559&quot;;
+var session = QiSession.Create(address);
+</code></pre>
+
+<p><br/>
+<code>QiSession</code>がセッションを表すクラスです。上記では<code>tcp://</code>のプレフィックス、アドレス、ポートの全てを指定して接続処理を行っていますが、実際にはアドレス以外の部分を省略できるほか、Bonjourがインストール済みである場合はアドレスを名前によって指定することも出来ます。</p>
+<pre><code class="csharp">//OK: ローカルホスト上に作成した仮想ロボットへ接続
+var s1 = QiSession.Create(&quot;tcp://127.0.0.1:9559&quot;);
+
+//OK: 暗黙にtcpを指定した扱いになる
+var s1 = QiSession.Create(&quot;127.0.0.1:9559&quot;);
+
+//OK: ポートを指定しない場合9559を指定した扱いになる
+var s3 = QiSession.Create(&quot;127.0.0.1&quot;);
+
+//ロボット側が&quot;pepper.local&quot;という名前でアクセスできる場合これでもOK
+var s4 = QiSession.Create(&quot;pepper.local&quot;);
+</code></pre>
+
+<p><br/><br/></p>
+<h2 id="2-3">2-3. サービスのロードと関数呼び出し</h2>
+<p>サービス(モジュール)を取得し、関数を実行します。</p>
+<pre><code class="csharp">//最も基本的なモジュールの一つとして合成音声のモジュールを取得
+var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+
+//&quot;say&quot;関数に文字列引数を指定して実行
+tts[&quot;say&quot;].Call(&quot;this is test&quot;);
+</code></pre>
+
+<p><br/>
+サービス(モジュール)とは上記の<code>ALTextToSpeech</code>のような、ロボット上に登録されている、まとまった機能単位を表す言葉です。Aldebaran社が実際にロボット上で搭載しているサービスの内容についてはWeb上の<a href="http://doc.aldebaran.com/2-1/home_nao.html"><code>NAO Document</code></a>や、<code>Choregraphe</code>のインストール時にPCへ同時に導入されるローカル版の<code>NAO Document</code>を参照してください。これらのドキュメンテーションは<code>C++</code>/<code>Python</code>にフォーカスしたものですが、C#向けに読み替えることは決して難しくありません。</p>
+<p><br/>
+なお参考までに補足しますが、2016年3月時点ではWeb上の公式ドキュメンテーションより<code>Choregraphe</code>同梱版ドキュメンテーションの方が新しいため、オフィシャルドキュメントが参照したい場合<code>Choregraphe</code>同梱版を優先的に調べることを推奨します。</p>
+<p><br/>
+上記の例では最もスタンダードかつ頻繁に用いられるモジュールの一つとして、音声合成を行う<code>ALTextToSpeech</code>モジュールを用いています。このモジュールには発話を行う<code>say</code>関数が含まれており、この関数のシグネチャを<code>C#</code>風に表すと次のように書けます。</p>
+<pre><code class="csharp">void say(string text);
+</code></pre>
+
+<p><br/>
+今回の例については、関数のシグネチャと呼び出しを行うプログラムの対応がほとんど自明であると言えます。ただし戻り値がある関数や、組み込み型ではない複雑な引数、戻り値を持つ関数の扱いには注意を要します。これについては<a href="../method/"><strong>関数の呼び出し</strong></a>で紹介します。</p>
+<p><br/><br/></p>
+<h2 id="2-4">2-4. セッションの破棄とリソース解放</h2>
+<p>セッションの利用が終了した際にリソースを解放します。</p>
+<pre><code class="csharp">session.Close();
+session.Destroy();
+</code></pre>
+
+<p>多くのプログラムではセッションの生存期間とプログラム自体の生存期間が一致するため、上記の処理を明示的に行わなくてもさほど問題はありません。実際、これ以降のチュートリアルではセッションの<code>Close</code>処理や<code>Destroy</code>処理をコードで省いています。</p>
+<p><br/><br/></p>
+<h1 id="x86">補足:ターゲットをx86とすべき理由</h1>
+<p>本チュートリアルではアプリケーションのターゲットプラットフォームを<code>x86</code>にすることを推奨しています。というのも、<code>Baku.LibqiDotNet</code>のラップ元である<code>libqi</code>ライブラリはWindowsに関して<code>x86</code>向けのものしか存在しないためです。ビルド時点でプラットフォームを<code>x86</code>に限定することで、実行時に予想外の例外(具体的に言うと<a href="https://msdn.microsoft.com/ja-jp/library/system.badimageformatexception%28v=vs.110%29.aspx"><code>BadImageFormatException</code></a>)が送出されるのを防止できます。</p>
+<p><br/>
+Mac/Ubuntu上でMonoDevelop等を用いて<code>Baku.LibqiDotNet</code>を利用したアプリケーション開発を行う場合、これらのOS上ではWindowsと異なり<code>libqi</code>が64bit版ライブラリをサポートしている(Macでは逆に32bitが非サポート)ため、<code>x64</code>をターゲットにしてください。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../method/" class="btn btn-neutral float-right" title="関数の呼び出し">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../method/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

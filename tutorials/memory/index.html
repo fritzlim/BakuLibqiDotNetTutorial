@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>ALMemoryの使い方 - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ALMemoryの使い方";
+    var mkdocs_page_input_path = "tutorials\memory.md";
+    var mkdocs_page_url = "/tutorials/memory/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">ALMemoryの使い方</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#almemory">ALMemory</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#1">1. メモリデータの読み書き</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-1">1-1. データの書き込みと読み込み</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-2">1-2. 既存のデータ一覧を取得する</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#2">2. メモリイベントという仕組み</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-1">2-1. イベントの購読</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-2">2-2. イベントを発生させる</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-3">2-3. 既存のイベント一覧を取得する</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#3">3. ロボットの会話ログを取得するサンプル</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/troubles/">困ったときに: 低レイヤAPI</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>ALMemoryの使い方</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="almemory">ALMemory</h1>
+<p>本ページではAldebaranのロボットが標準的に採用している<a href="http://doc.aldebaran.com/2-1/naoqi/core/almemory.html"><code>ALMemory</code></a>モジュールにアクセスし、メモリデータの読み書きやメモリイベントの監視を行う方法を見ていきます。<code>ALMemory</code>自体のしっかりした説明については公式ドキュメンテーションも参照下さい。</p>
+<p><br/>
+厳密に言うなら<code>libqi</code>や<code>Baku.LibqiDotNet</code>と<code>ALMemory</code>には直接の関係はありませんが、<code>ALMemory</code>を使いこなすことはロボットアプリケーションの実用上重要であるため、チュートリアルの一環として紹介します。</p>
+<p><br/>
+本ページのチュートリアルは3セクションに分かれています。第一に<code>ALMemory</code>を用いてメモリデータの読み書きを行うプログラムを作成します。第二にメモリのイベント機構とその活用方法をサンプルコードで学びます。第三に、メモリのイベントを活用するプログラムとしてロボットが発した言葉やロボットが周囲から聞き取った音声認識結果のテキストログを取得するプログラムを作成します。</p>
+<p><br/>
+本節でも前までのチュートリアルと同様にコンソールアプリケーションを作成します。アプリケーションの準備手順については<a href="../hello_world/"><strong>Hello World</strong></a>を確認してください。</p>
+<p><br/><br/></p>
+<h1 id="1">1. メモリデータの読み書き</h1>
+<hr />
+<p>もっとも簡単なデータ処理として、ロボット上のパブリックな領域へデータを書き込んだり、逆に読み込んだりする方法を見ていきましょう。</p>
+<p><br/><br/></p>
+<h2 id="1-1">1-1. データの書き込みと読み込み</h2>
+<hr />
+<p><code>ALMemory</code>モジュールは<a href="http://doc.aldebaran.com/2-1/naoqi/core/almemory-api.html#ALMemoryProxy::insertData__ssCR.AL::ALValueCR"><code>insertData</code></a>という関数があるので、これを使ってメモリ上へデータを配置します。またデータの取得は<a href=""><code>getData</code></a>関数で行えます。</p>
+<p><br/>
+以下では<code>Program.cs</code>のみを含むコンソールアプリケーションを想定し、簡単のため<code>using</code>文と<code>Main</code>関数のみを記述します。また接続先となるロボットのアドレスは適切に指定してください。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+    memory[&quot;insertData&quot;].Call(&quot;MyApplication/MyData&quot;, 12345);
+
+    int data = (int)memory[&quot;getData&quot;].Call(&quot;MyApplication/MyData&quot;);
+
+    Console.WriteLine(data);
+}
+</code></pre>
+
+<p><br/>
+これを実行すると、いったんロボット上に<code>"MyApplication/MyData"</code>というキーへ整数値<code>12345</code>を割り当てたのち、それをすぐダウンロードして結果を表示するという作業が行われます。その結果としてコンソールには<code>12345</code>が表示されます。</p>
+<p><br/><br/></p>
+<h2 id="1-2">1-2. 既存のデータ一覧を取得する</h2>
+<hr />
+<p>これはドキュメンテーションから対応する関数を見つけられるかどうかの勝負です。<code>ALMemory</code>には<a href="http://doc.aldebaran.com/2-1/naoqi/core/almemory-api.html#ALMemoryProxy::getDataListName"><code>getDataListName</code></a>という関数があるので、これを使うとほぼ直ちに結果が得られます。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://192.168.1.4:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+    var keys = (string[])memory[&quot;getDataListName&quot;].Call();
+
+    Console.WriteLine(keys.Length);
+}
+</code></pre>
+
+<p><br/>
+筆者が仮想ロボットに対してこのプログラムを試したところ<code>1034</code>個のデータがあるという結果を得ました。メモリデータの数は状況に応じて大きく変化するので、実機のロボットでこれよりはるかに大きい数字が出てもびっくりしないでください。</p>
+<p><br/><br/></p>
+<h1 id="2">2. メモリイベントという仕組み</h1>
+<hr />
+<p>前節ではメモリ上のデータをシンプルに読んだり書いたりする機能を紹介しました。<code>ALMemory</code>にはこれに加えて<code>C#</code>とほぼ同様のイベント機構がサポートされています。つまり、データの入力と同時にイベントを発生させたり、イベントハンドラ(コールバック)を登録することが出来ます。この機能はPepperがタブレットと本体を連携させるアプリケーション等では中心的な役割を担っており、<code>C#</code>でのアプリケーション作成でもイベント駆動処理が行いたい場合とくに重要です。</p>
+<p><br/><br/></p>
+<h2 id="2-1">2-1. イベントの購読</h2>
+<hr />
+<p>ロボット上に既に定義されているイベントにアクセスする方法は<a href="#3"><strong>ロボットの会話ログを取得するサンプル</strong></a>で紹介するとして、ここではユーザが定義したイベントを購読する方法から始めます。本節で紹介するプログラムは<code>Python</code>の場合であれば<a href="../doc.aldebaran.com/libqi/guide/py-tonaoqi2.html#subscribe-to-a-memory-event"><code>qi Framework</code>のドキュメンテーション</a>に非常に似た例が掲載されています。</p>
+<p><br/>
+イベントの購読処理には次のような定型のプログラムを記述します。</p>
+<pre><code class="csharp">using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+    var subscriber = memory[&quot;subscriber&quot;].CallObject(&quot;MyApplication/MyEvent&quot;);
+
+    Action&lt;QiValue&gt; callback = v =&gt;
+    {
+        Console.WriteLine(&quot;Received Event&quot;);
+        Console.WriteLine(v.Dump());
+    };
+    subscriber.ConnectSignal(&quot;signal&quot;, callback);
+
+    Console.WriteLine(&quot;Press ENTER to end..&quot;);
+    Console.ReadLine();
+
+    subscriber.DisconnectSignal(callback).Wait();
+}
+</code></pre>
+
+<p><br/>
+このプログラムが接続に成功した場合、<code>ENTER</code>キーを押すとプログラムが終了します。それだけです。このプログラムは何もしません。</p>
+<p><br/>
+いや、何もしないというのは流石に言い過ぎでした。より正確には、このプログラムは発生し得ないイベントを購読、監視していました。購読処理は次のようにして行われます。</p>
+<pre><code class="csharp">var subscriber = memory[&quot;subscriber&quot;].CallObject(&quot;MyApplication/MyEvent&quot;);
+
+Action&lt;QiValue&gt; callback = v =&gt;
+{
+    Console.WriteLine(&quot;Received Event&quot;);
+    Console.WriteLine(v.Dump());
+};
+subscriber.ConnectSignal(&quot;signal&quot;, callback);
+
+//何かしらの処理
+
+subscriber.DisconnectSignal(callback).Wait();
+
+</code></pre>
+
+<p><br/>
+<code>subscriber</code>関数の<code>CallObject</code>(<code>Call</code>関数ではない事に注意！)を呼び出すと、通常のプログラムと異なり、この呼び出し結果は<code>QiObject</code>型の変数となります。<code>QiObject</code>なんて初耳だと思われるかもしれませんが、実は<code>QiObject</code>というのは今までのチュートリアルで用いてきたモジュールを表す型です。</p>
+<pre><code class="csharp">QiObject tts = session.GetService(&quot;ALTextToSpeech&quot;);
+QiObject motion = session.GetService(&quot;ALMotion&quot;);
+QiObject memory = session.GetService(&quot;ALMotion&quot;);
+
+QiObject subscriber 
+    = memory[&quot;subscriber&quot;].CallObject(&quot;MyApplication/MyEvent&quot;);
+</code></pre>
+
+<p><br/>
+変数の型は同じですが、<code>subscriber</code>変数では今まで利用してこなかった<code>ConnectSignal</code>関数と<code>DisconnectSignal</code>関数を用いています。<code>ConnectSignal</code>がイベントハンドラへの追加処置、<code>DisconnectSignal</code>がハンドラの削除に対応しています。第一引数である<code>"signal"</code>というのは監視するイベントのキーのような文字列なのですが、この文字列はある種のマジックナンバーみたいなもので、<code>ALMemory</code>をこのように使う範囲では<code>"signal"</code>以外の文字列を渡す必要はありません。定数文字列をわざわざ書かされるなんて、と思うのももっともなことですが、この一見ちぐはぐなAPIは<code>qi Framework</code>がロボットの実装詳細と独立なライブラリであるために必要なすれ違いなので、まあ許容してください。</p>
+<p><br/>
+とにかく、上記のように第一引数へ<code>"signal"</code>という定数文字列、第二引数へイベントハンドラ的なコールバック関数を登録する、という手続きだけ覚えてください。</p>
+<p><br/>
+また購読解除では購読処理に使ったのと同じ<code>Action&lt;QiValue&gt;</code>変数を指定することで解除処理が行えますが、実はこの購読解除は整数値のIDベースな方法で置き換える事も可能です。</p>
+<pre><code class="csharp">
+var subscriber = memory[&quot;subscriber&quot;].CallObject(&quot;MyApplication/MyEvent&quot;);
+
+Action&lt;QiValue&gt; callback = v =&gt;
+{
+    Console.WriteLine(&quot;Received Event&quot;);
+    Console.WriteLine(v.Dump());
+};
+ulong id = subscriber.ConnectSignal(&quot;signal&quot;, callback);
+
+//何かしらの処理
+
+subscriber.DisconnectSignal(id).Wait();
+</code></pre>
+
+<p><br/>
+個人的には登録時に使った<code>Action</code>を直接渡す方法の方が直感的で気に入っていますが、好みで使い分けてください。</p>
+<p>また上記のプログラムでは<code>QiValue</code>の<code>Dump</code>関数を用いていますが、この関数は中身が分からない<code>QiValue</code>のオブジェクトについて内容を表す文字列を得るためのものです。今回のような純粋なデバッグでは有効に活用することが出来ます。</p>
+<p><br/><br/></p>
+<h2 id="2-2">2-2. イベントを発生させる</h2>
+<hr />
+<p>前節ではイベントを購読するコードを紹介しましたが、あくまで購読しただけなのでコールバックの動作も確認できず、何が起きているのか分かりにくかったと思います。そこでイベントを発生(発火)させるコードを追加し、全体の動作を見てみましょう。</p>
+<pre><code class="csharp">using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+    var subscriber = memory[&quot;subscriber&quot;].CallObject(&quot;MyApplication/MyEvent&quot;);
+
+    Action&lt;QiValue&gt; callback = v =&gt;
+    {
+        Console.WriteLine(&quot;Received Event&quot;);
+        Console.WriteLine(v.Dump());
+    };
+    subscriber.ConnectSignal(&quot;signal&quot;, callback);
+
+    var cts = new CancellationTokenSource();
+    var token = cts.Token;
+    var t = Task.Run(async () =&gt;
+    {
+        while (!token.IsCancellationRequested)
+        {
+            await Task.Delay(1000);
+            memory[&quot;raiseEvent&quot;].Call(&quot;MyApplication/MyEvent&quot;, 12345);
+        }
+    }, token);
+
+    Console.WriteLine(&quot;Press ENTER to end..&quot;);
+    Console.ReadLine();
+
+    cts.Cancel();
+    t.Wait();
+
+    subscriber.DisconnectSignal(callback).Wait();
+}
+</code></pre>
+
+<p><br/>
+このプログラムでは、自分が購読したイベントの発生処理を<code>raiseEvent</code>関数の呼び出しによって自力でこなしています。うまく動作した場合、1秒おきにコールバック関数が呼ばれます。出力例はこのようになります。</p>
+<pre><code>[W] 1457789913.867607 10072 qi.path.sdklayout: No Application was created, trying to deduce paths
+Press ENTER to end..
+[I] 1457789914.966895 11620 qimessaging.object: Signal Callback()
+Received Event
+Tuple[1]:
+  Dynamic
+    QiInt:12345
+
+[I] 1457789916.024120 11620 qimessaging.object: Signal Callback()
+Received Event
+Tuple[1]:
+  Dynamic
+    QiInt:12345
+
+</code></pre>
+
+<p><br/>
+<code>"Received Event"</code>に続く3行は<code>QiValue.Dump</code>関数によって<code>QiValue</code>値の中身を表示した出力ですが、ここで<code>Tuple</code>や<code>Dynamic</code>といった見慣れないものが再び現れました。</p>
+<p><br/>
+<code>Tuple</code>というのは名前の通り<code>C#</code>のタプル型みたいなものです。タプルから値を取り出す処理は配列とほぼ同様にインデックス指定で出来ますが、配列との違いとして要素ごとに型が異なってもよいことに注意が必要です。今回の場合データが単一の整数であるため、わざわざタプルの形で渡されるのは釈然としないかもしれませんが、これは「そういうものだ」と割り切ってください。</p>
+<p><br/></p>
+<p><code>Dynamic</code>というのは、あまり意識しないでも構わないのですが、単一の<code>QiValue</code>を保持するコンテナです。保持できる<code>QiValue</code>の内容に制約が無いため、見かけ上動的に型が変わっているように見えるのが<code>Dynamic</code>型と呼ばれている理由です。上の例では<code>Dynamic</code>型は実際には整数値を保持しており、その値が<code>12345</code>であるという構造になっています。</p>
+<p><br/>
+<code>Dynamic</code>型からデータを取り出そうとすると暗黙に<code>Dynamic</code>が実際に保持するデータを得られるので、<code>Dynamic</code>の存在を意識せずにキャスト処理をして構いません。コールバック関数を修正し、整数値を取得できるようにしてみましょう。具体的には次のようにします。</p>
+<pre><code class="csharp">Action&lt;QiValue&gt; callback = v =&gt;
+{
+    Console.WriteLine(&quot;Received Event&quot;);
+    int data = (int)v[0];
+    Console.WriteLine(data);
+};
+</code></pre>
+
+<p><br/>
+タプルの唯一の要素を取り出して整数値にキャストしています。実行例は次の通りです。</p>
+<pre><code>[W] 1457794565.019111 12216 qi.path.sdklayout: No Application was created, trying to deduce paths
+Press ENTER to end..
+[I] 1457794566.142094 12216 qimessaging.object: Signal Callback()
+Received Event
+12345
+[I] 1457794567.168465 12216 qimessaging.object: Signal Callback()
+Received Event
+12345
+</code></pre>
+
+<p><br/>
+整数値が正しく抽出できた事が分かります。</p>
+<p><br/><br/></p>
+<h2 id="2-3">2-3. 既存のイベント一覧を取得する</h2>
+<hr />
+<p><a href="#1-2">データ一覧を取得する</a>時とほとんど同じ手順が利用可能です。先ほどとほぼ同じコードですが、今度は<a href="http://doc.aldebaran.com/2-1/naoqi/core/almemory-api.html#ALMemoryProxy::getEventList"><code>getEventList</code></a>という関数を使います。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://192.168.1.4:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+    var keys = (string[])memory[&quot;getDataListName&quot;].Call();
+
+    Console.WriteLine(keys.Length);
+}
+</code></pre>
+
+<p><br/>
+仮想ロボットでこれを試したところ<code>230</code>個のイベントが登録されている、という結果が得られました。メモリデータの個数と同様、この数値も実機のロボットでは各段に大きくなることに注意してください。</p>
+<p><br/><br/></p>
+<h1 id="3">3. ロボットの会話ログを取得するサンプル</h1>
+<hr />
+<p>前節まではイベントを購読したり発生させたりする方法を自作のイベントによって見てきました。自作イベントの取り扱いも重要ですが、ここでは具体的なプログラムの例としてロボットの発話やロボットが聞き取った音声認識結果のテキストをロギングするプログラムを書いてみます。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://192.168.1.4:9559&quot;;
+    var session = QiSession.Create(address);
+
+    var memory = session.GetService(&quot;ALMemory&quot;);
+
+
+    //人の会話
+    var subscriberHumanSpeech = memory[&quot;subscriber&quot;]
+        .CallObject(&quot;Dialog/LastInput&quot;);
+    ulong idHumanSpeech = subscriberHumanSpeech.ConnectSignal(&quot;signal&quot;, qv =&gt;
+    {
+        if (qv.Count &gt; 0 &amp;&amp; qv[0].ContentValueKind == QiValueKind.QiString)
+        {
+            Console.WriteLine($&quot;Human: {qv[0].ToString()}&quot;);
+        }
+        else
+        {
+            Console.WriteLine(&quot;Human: Received unexpected data&quot;);
+            Console.WriteLine(qv.Dump());
+        }
+    });
+
+    //ロボットの発話
+    var subscriberRobotSpeech = memory[&quot;subscriber&quot;]
+        .CallObject(&quot;ALTextToSpeech/CurrentSentence&quot;);
+    ulong idRobotSpeech = subscriberRobotSpeech.ConnectSignal(&quot;signal&quot;, qv =&gt;
+    {
+        if (qv.Count &gt; 0 &amp;&amp; qv[0].ContentValueKind == QiValueKind.QiString)
+        {
+            string sentence = qv[0].ToString();
+            if (!string.IsNullOrWhiteSpace(sentence))
+            {
+                Console.WriteLine($&quot;Robot: {sentence}&quot;);
+            }
+        }
+        else
+        {
+            Console.WriteLine(&quot;Robot: Received unexpected data&quot;);
+            Console.WriteLine(qv.Dump());
+        }
+    });
+
+    Console.WriteLine(&quot;Press ENTER to quit logging results.&quot;);
+    Console.ReadLine();
+
+    subscriberHumanSpeech.DisconnectSignal(idHumanSpeech).Wait();
+    subscriberRobotSpeech.DisconnectSignal(idRobotSpeech).Wait();
+}
+</code></pre>
+
+<p><br/>
+上記のコードを実行して待機状態に入ったら、ログ出力を確認するために次のような方法を取ってください。</p>
+<ol>
+<li>ロボットに発話させる: <ul>
+<li><code>Choregraphe</code>上で<code>say</code>ボックスを使い、簡単な発話をするプログラムを実行する</li>
+<li><code>C#</code>の新しいプロジェクトを作ってHello Worldコードを実行する</li>
+<li><code>Python</code>の対話環境で<code>PyNaoqi SDK</code>などを使って発話させる</li>
+</ul>
+</li>
+<li>人の発話を認識させる:<ul>
+<li>(実機ロボット)<code>Autonomous Life</code>がオンの状態で話しかける</li>
+<li>(仮想/実機ロボット)<code>Choregraphe</code>の<code>ダイアログ</code>ウィンドウでテキストを入力する</li>
+</ul>
+</li>
+</ol>
+<p><br/>
+うまく動作している場合、ロボットの発話や人の発話情報がコンソールに表示されます。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../create_service/" class="btn btn-neutral float-right" title="サービスの自作">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../method/" class="btn btn-neutral" title="関数の呼び出し"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../method/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../create_service/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

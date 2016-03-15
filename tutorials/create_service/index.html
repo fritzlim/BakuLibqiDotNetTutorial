@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>サービスの自作 - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "サービスの自作";
+    var mkdocs_page_input_path = "tutorials\create_service.md";
+    var mkdocs_page_url = "/tutorials/create_service/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">サービスの自作</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#create-service">Create Service</a></li>
+                
+                    <li><a class="toctree-l4" href="#1">1. サービスの作成と呼び出し</a></li>
+                
+                    <li><a class="toctree-l4" href="#2">2. サービスの登録</a></li>
+                
+                    <li><a class="toctree-l4" href="#3">3. 登録されたサービスの呼び出し</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/troubles/">困ったときに: 低レイヤAPI</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>サービスの自作</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="create-service">Create Service</h1>
+<hr />
+<p>ここでは<code>Baku.LibqiDotNet</code>を用いて自作のサービスを定義し、ロボット上に登録する手順を紹介します。この機能を使う機会はそこまで多くありませんが、以下のような状況で必須となります。</p>
+<ul>
+<li>マシンリソースを要求するタスクをロボットからPCに委譲したい</li>
+<li>Windowsとの連携に特化したデバイス(Kinectなど)をロボットとシームレスに接続したい</li>
+<li>一部の既存サービス(<code>ALAudioDevice</code>など)の機能をフルに活用したい</li>
+</ul>
+<p><br/>
+本ページでもコンソールアプリケーションを作成します。アプリケーションの作成方法については<a href="../hello_world/"><strong>Hello World</strong></a>を参照してください。</p>
+<p><br/><br/></p>
+<h2 id="1">1. サービスの作成と呼び出し</h2>
+<hr />
+<p><br/>
+<code>qi Framework</code>に登録可能なサービスを作成するには<code>QiObjectBuilder</code>というクラスを用います。以下のサンプルはネットワークを必要としません。プロセス内でサービスを定義し、自分で利用する例となっています。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    var objBuilder = QiObjectBuilder.Create();
+    objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
+    {
+        Console.WriteLine(&quot;test was called&quot;);
+        return QiValue.Void;
+    });
+    objBuilder.AdvertiseMethod(&quot;twice::i(i)&quot;, (sig, arg) =&gt;
+    {
+        Console.WriteLine(&quot;twice was called&quot;);
+        int i = (int)arg[0];
+        return new QiInt32(i * 2).QiValue;
+    });
+
+    var obj = objBuilder.BuildObject();
+    obj[&quot;test&quot;].Call();
+
+    int res = (int)obj[&quot;twice&quot;].Call(21);
+    Console.WriteLine($&quot;Res = {res}&quot;);
+}
+</code></pre>
+
+<p><br/>
+出力例です。</p>
+<pre><code>Complete sig:test::v()
+test was called
+Complete sig:twice::i(i)
+twice was called
+Res = 42
+</code></pre>
+
+<p><br/>
+この例では<code>"test"</code>および<code>"twice"</code>というメソッドを持つサービスを作成しています。まずは単純な例として<code>"test"</code>メソッドを定義するコードを見てみましょう。</p>
+<pre><code class="csharp">var objBuilder = QiObjectBuilder.Create();
+objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
+{
+    Console.WriteLine(&quot;test was called&quot;);
+    return QiValue.Void;
+});
+</code></pre>
+
+<p><br/>
+<code>QiObjectBuilder.Create</code>関数でインスタンスを取得し、<code>AdvertiseMethod</code>関数を呼び出すことで「このサービスにはこのメソッドがあり、実装はこうなっています」という情報を登録します。</p>
+<p><br/></p>
+<p>関数名に続けて記載された<code>"::v()"</code>というのは関数シグネチャを表しています。<code>"::"</code>は単にメソッド名とシグネチャを区切る文字列です。これに続く<code>"v"</code>という文字列は<code>void</code>を意味し、関数の戻り値がないことを示しています。これに続く<code>()</code>は関数の引数が<code>0</code>個であることを示しています。つまり<code>test</code>は引数を取らず戻り値も無い、単に呼び出すだけの関数であることが宣言されています。</p>
+<p><br/>
+シグネチャについてもう一つの例を見てみましょう。<code>twice</code>関数は<code>"twice::i(i)"</code>という形式で定義されています。<code>"::i(i)"</code>というシグネチャ表記には<code>"i"</code>という文字が2度現れますが、<code>"i"</code>は<code>int</code>を表しています。<code>"i(i)"</code>のうち左側(カッコの外側)にある<code>"i"</code>は関数の戻り値が整数であることを示し、<code>"(i)"</code>は関数が単一の整数値を引数に取ることを示しています。</p>
+<p><br/>
+上記で紹介した以外の型を指定したい場合、<a href="http://doc.aldebaran.com/libqi/api/cpp/type/signature.html"><strong>qi Frameworkドキュメント</strong></a>に対応表があるので参考にしてください。</p>
+<p><br/><br/></p>
+<h2 id="2">2. サービスの登録</h2>
+<hr />
+<p>(未整備です)</p>
+<p><br/><br/></p>
+<h2 id="3">3. 登録されたサービスの呼び出し</h2>
+<hr />
+<p>(未整備です)</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../references/type_rules/" class="btn btn-neutral float-right" title="型の対応">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../memory/" class="btn btn-neutral" title="ALMemoryの使い方"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../memory/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../references/type_rules/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
