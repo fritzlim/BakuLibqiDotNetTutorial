@@ -115,7 +115,7 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#_1">トラブルシューティング</a></li>
+                <li class="toctree-l3"><a href="#api">困ったときに: 低レイヤAPI</a></li>
                 
             
             </ul>
@@ -162,9 +162,19 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="_1">トラブルシューティング</h1>
-<p><code>Baku.LibqiDotNet</code>は既知の不具合をいくつか含んでいますが、ライブラリの低レイヤにアクセスすることで不具合の回避が可能です。</p>
-<p>(TODO: 詳細がまとまってないので沢山書いてね)</p>
+                <h1 id="api">困ったときに: 低レイヤAPI</h1>
+<hr />
+<p><code>Baku.LibqiDotNet</code>の実装には不具合もあるため、複雑な条件のもとで関数を呼び出すと処理に失敗するケースがあります。例えば、古いバージョンの<code>Baku.LibqiDotNet</code>では次の条件を同時に満たした場合に<code>QiObject.Call</code>を用いた関数の呼び出しが失敗する仕様になっていました。</p>
+<ul>
+<li>同一サービス内に、同名で引数の種類が異なる関数(オーバーロード)が複数ある</li>
+<li>実際の引数としてタプル(<code>QiTuple</code>)または辞書(<code>QiMap</code>)型の変数を渡す</li>
+</ul>
+<p>この問題は具体例で言うと<a href="http://doc.aldebaran.com/2-1/naoqi/audio/alanimatedspeech-api.html#ALAnimatedSpeechProxy::say__ssCR">ALAnimatedSpeech::say</a>関数などで生じます。</p>
+<p><br/>
+この不具合は、想像がつくかもしれませんが、<code>Call</code>関数の内部で行っている関数オーバーロードの解決処理に失敗しているのが原因です。</p>
+<p>幸いにして筆者は自分で作ったライブラリを信用していなかったので、<code>Call</code>より低レイヤの関数としてオーバーロードを自分で選択可能な低レイヤ関数を公開しています。それが<code>QiObject.CallDirect</code>メソッドです。このメソッドの使い方について具体例をまじえて紹介します。</p>
+<p><br/>
+(詳細な文書がまだ整備されていません。<a href="https://github.com/malaybaku/LibqiDotNetAnimatedSaySample">GitHub</a>に<code>Baku.LibqiDotNet</code>のNuGetパッケージver1.0.1を想定した例を紹介しているので、とりあえずコチラを参考にしてください)</p>
               
             </div>
           </div>
