@@ -10,7 +10,7 @@
 
 本記事以外の話題は基本的に`Windows`に焦点を絞ってきましたが、`Unity`の場合はターゲットとするプラットフォームが広く取れるため、原理的にはラップ元である`libqi`がサポートされる全てのプラットフォームで`Baku.LibqiDotNet`とUnityを連携させたアプリケーションを動作させられます。
 
-とはいうものの、パッケージの体裁として現状では`Windows`と`Mac`のみがサポートされています。これら以外のOS(デスクトップの`Linux`や`Android`など)上で`Baku.LibqiDotNet`を用いたUnityアプリケーションを動かしたい場合でも、マネージライブラリである`Baku.LibqiDotNet.dll`はそのまま利用できます。ただし、動作させたいOSに対応した`libqi`のネイティブライブラリをUnityプロジェクトのAssetへ正しく配置する必要があることに注意してください。
+とはいうものの、パッケージの体裁として現状では`Windows`と`Mac`のみがサポートされています。これら以外のOS(デスクトップの`Linux`や`Android`など)上で`Baku.LibqiDotNet`を用いたUnityアプリケーションを動かしたい場合でも、マネージライブラリである`Baku.LibqiDotNet.dll`はそのまま利用できます。ただし、動作させたいOSに対応した`libqi`のネイティブライブラリをUnityプロジェクトのAssetへ正しく配置する必要があることに注意してください。例えばUnityでビルドしたプログラムを`Linux(Ubuntu)`上で動作させたい場合、`libqic.so`や`libqi.so`をはじめとするshared objectライブラリを配布されたNAOqi SDKなどからコピーしてくる必要があります。
 
 
 <br/><br/>
@@ -36,6 +36,9 @@ Unity向けパッケージに含まれる`Baku.LibqiDotNet.dll`はNuGetパッケ
 - NuGetパッケージ版では`DllImport`で指定するアンマネージライブラリ名が`qic.dll`であるのに対し、Unity向けパッケージでは拡張子のない`qic`という名前指定が使われている
 
 <br/>
+とくに`DllImport`に関する設定の差により、NuGetパッケージのライブラリをUnityに持ち込んだり、逆にUnity用のライブラリを.NETアプリケーション用に使おうとしても失敗します。ご注意ください。
+
+<br/>
 上記の差異が存在する理由も簡単に補足しておきます。
 
 第一にUnity向けパッケージでターゲットアーキテクチャが`AnyCPU`となっている理由ですが、これはWindows/Macの両方に対応するためです。`Baku.LibqiDotNet`がラップしているアンマネージライブラリがWindowsでは32bit、Mac版では64bitのみのサポートとなっているため、マネージドライブラリは`AnyCPU`ターゲットであることが必須となっています。これに対してNuGetパッケージ版はWindowsでの利用のみを想定しているため、動作しない`x64`での実行を防ぐ目的で`x86`がターゲットとなっています。
@@ -46,7 +49,9 @@ Unity向けパッケージに含まれる`Baku.LibqiDotNet.dll`はNuGetパッケ
 <br/><br/>
 ## 3. 把握済みの問題
 
-`Windows`以外のOSで`Baku.LibqiDotNet`とUnityを連携させたアプリケーションを作成する場合、バイナリデータの送受信は(多分)できません。この制約はラップ元のアンマネージライブラリである[`libqi-capi`](https://github.com/aldebaran/libqi-capi)の未実装部分を利用していることに由来します(`Windows`に関してはソースからビルドし直して対策しました。詳細は[GitHubのissue](https://github.com/malaybaku/BakuLibQiDotNet/issues/1)に掲載しているので、他のOSでも`libqi-capi`のビルド環境さえ構成できれば対策は可能だと思います)。
+`Windows`以外のOSで`Baku.LibqiDotNet`とUnityを連携させたアプリケーションを作成する場合、バイナリデータの送受信は(多分)できません。この制約は、`Baku.LibqiDotNet`がラップしている元のアンマネージライブラリである[`libqi-capi`](https://github.com/aldebaran/libqi-capi)の機能が部分的に実装されていないことに由来します。
+
+ただし`Windows`に関してはソースからビルドし直して対策を行っているので同様の問題はありません。対策の大まかな指針については[GitHubのissue](https://github.com/malaybaku/BakuLibQiDotNet/issues/1)に掲載しているので、他のOSでどうにかバイナリデータを扱いたい場合は参考にしてください。
 
 
 
@@ -62,5 +67,5 @@ Unity向けパッケージに含まれる`Baku.LibqiDotNet.dll`はNuGetパッケ
 5. ビルド結果のうち`Baku.LibqiDotNet.dll`および`Baku.LibqiDotNet.xml`をUnityのAssetに含まれる既存のファイルから置き換える
 
 <br/>
-`UNITY`というシンボルを定義する理由ですが、これはソース中の[**`DllImportSetting.cs`**](https://github.com/malaybaku/BakuLibQiDotNet/blob/master/Baku.LibqiDotNet/Baku.LibqiDotNet/QiApi/DllImportSettings.cs)でコンパイルシンボルに応じて`DllImport`属性に渡すファイル名を切り替えているためです。推奨はしませんが、シンボルによる分岐ではなく上記のソースファイル部分を手作業で適切に書き換えても問題ありません。
+`UNITY`というシンボルを定義する理由ですが、これはソース中の[**`DllImportSetting.cs`**](https://github.com/malaybaku/BakuLibQiDotNet/blob/master/Baku.LibqiDotNet/Baku.LibqiDotNet/QiApi/DllImportSettings.cs)でコンパイルシンボルに応じて`DllImport`属性に渡すファイル名を切り替えているためです。推奨はしませんが、シンボルによる分岐を用いずソースファイル自体を手作業で書き換えることによって、参照先ファイル名を切り替えても問題ありません。
 
