@@ -1,0 +1,19 @@
+site_name: LibqiDotNet Doc
+
+site_description: 'Documentation about Baku.LibqiDotNet, .NET wrapper library for libqi.'
+site_author: 'Baku'
+pages:
+- Home: index.md
+- Tutorials:
+    - 'Hello World': 'tutorials/hello_world.md'
+    - '関数の呼び出し': 'tutorials/method.md'
+    - 'ALMemoryの使い方': 'tutorials/memory.md'
+    - 'サービスの自作': 'tutorials/create_service.md'
+    - 'Unityとの連携': 'tutorials/work_with_unityengine.md'
+- References:
+    - '型の対応': 'references/type_rules.md'
+    - 'コンテナ型': 'references/containers.md'
+    - 'メタオブジェクト解析': 'references/read_metaobject.md'
+- FAQ: faq.md
+theme: readthedocs
+
