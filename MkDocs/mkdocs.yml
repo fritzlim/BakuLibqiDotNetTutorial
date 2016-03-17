@@ -15,6 +15,7 @@ pages:
     - 'コンテナ型': 'references/containers.md'
     - 'メタオブジェクト解析': 'references/read_metaobject.md'
     - '動的型リストを使用する': 'references/use_dynamic_list.md'
+    - 'ログ出力を制御する': 'references/log_setting.md'
 - FAQ: faq.md
 theme: readthedocs
 

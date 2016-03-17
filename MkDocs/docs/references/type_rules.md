@@ -108,7 +108,7 @@ class QiAnyValue
 他の組み込み型等についても同様で、[**型の対応表**](#1)に記載された`bool, string, byte[]`と整数型(`int, ushort`など)、小数型(`float, double`)について暗黙のキャストが可能です。使用頻度が高いと想定される`int[], double[], string[]`についても暗黙のキャストをサポートしています。したがって、見かけ上はこれら組み込み型(と一部の配列)はそのまま引数に代入することが出来ます。逆に、二重リスト(リストのリスト)のような複雑なデータ構造を指定する場合はキャストは利用できないため、`QiAnyValue`の派生型のコンストラクタやファクトリメソッドを用いて正しくインスタンスを生成してください。二重リストを用いる具体例は[**関数の呼び出し**](../tutorials/method.md)で紹介しています。
 
 <br/>
-### **3-2. QiAnyValueに関する暗黙の型変換 **
+### **3-2. QiValueに関する暗黙の型変換 **
 - - -
 先ほどの例では組み込み型を含むいくつかの型が`QiAnyValue`型へと暗黙に変換できる事により、関数の呼び出しコードが簡潔に書けることを紹介しました。
 
@@ -146,12 +146,12 @@ QiMap<QiString, QiInt32> d = new Dictionary<QiString, QiInt32>()
 
 
 <br/><br/>
-## 4. 動的型(Dynamic)
+## 4. 動的型(QiDynamic)
 - - -
-先に忠告しておきますが、これは`C#`の`dynamic`とはまったく違います！`qi Framework`の`Dynamic`が提供する機能はより単純ですが、その分言語に依存していない便利な機構です。`Dynamic`は1要素のリストあるいはタプルとみなすことが出来る、ある種のコンテナクラスです。ただし配列(`QiList<T>`)やタプル(`QiTuple`)と異なり、`Dynamic`は任意の型のデータを保持できるという特徴があります。以下は実際には動作しない疑似コードですが、`Dynamic`のコンセプトを示しています。
+先に忠告しておきますが、これは`C#`の`dynamic`とはまったく違います！`qi Framework`の`QiDynamic`型が提供する機能は`C#`の`dynamic`に比べると非常に単純ですが、その分言語に依存しない便利な機構を提供しています。`QiDynamic`は1要素のリストあるいはタプルとみなすことが出来る、ある種のコンテナクラスです。ただし配列(`QiList<T>`)やタプル(`QiTuple`)と異なり、`QiDynamic`は任意の型のデータを保持できるという特徴があります。以下は実際には動作しない疑似コードですが、`QiDynamic`のコンセプトを示しています。
 
 ```
-var qid = new QiFramework.Dynamic(new QiInt32(10));
+var qid = new QiFramework.QiDynamic(new QiInt32(10));
 var x = qid.Value; //xはQiInt32型の変数
 
 b.Value = new QiString("Hello!");
@@ -162,20 +162,65 @@ var z = qid.Value; //zはQiBool型の変数
 ```
 
 <br/>
-上の例では`Value`プロパティに次々と異なる型の変数を代入し、取り出しています。`qid`変数自体の型は`Dynamic`のまま不変ですが、`Value`へのアクセスによって見かけ上型が動的に変化しているように扱えていることが分かります。
+上の例では`Value`プロパティに次々と異なる型の変数を代入し、取り出しています。`qid`変数自体の型は`QiDynamic`のまま不変ですが、`Value`へのアクセスによって見かけ上型が動的に変化しているように扱えていることが分かります。
 
 <br/>
-`Dynamic`型は`qi Framework`において、事前に渡される関数のシグネチャが固定しづらい時に利用されています。例えば運動を制御する`ALMotion`では指定した関節の目標となる角度値を指定できる[`setAngles`](http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::setAngles__AL::ALValueCR.AL::ALValueCR.floatCR)関数がありますが、この関数は内部的に2種類のオーバーロードを持っており、シグネチャがおよそ次のようになっています。
+`QiDynamic`型は`qi Framework`において、事前に渡される関数のシグネチャが固定しづらい時に利用されています。例えば運動を制御する`ALMotion`では指定した関節の目標となる角度値を指定できる[`setAngles`](http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::setAngles__AL::ALValueCR.AL::ALValueCR.floatCR)関数がありますが、この関数は内部的に2種類のオーバーロードを持っており、シグネチャがおよそ次のようになっています。
 
 ```
-void setAngles(QiString name, Dynamic angles, Dynamic fraction);
-void setAngles(QiList<QiString> names, Dynamic angles, Dynamic fraction);
+void setAngles(QiString name, QiDynamic angles, QiDynamic fraction);
+void setAngles(QiList<QiString> names, QiDynamic angles, QiDynamic fraction);
 ```
 
 <br/>
-ドキュメンテーションを読むと分かるのですが、実際には上記の`Dynamic`部分には単一の`double`値か`double[]`が渡されます。`Dynamic`を使わないと`setAngles`関数のオーバーロードは2種類では済まず、具体的に言うと(第一引数、第二引数、第三引数がいずれも2種類の型を取るので)8個ほど必要だったことがうかがい知れます。`Dynamic`を用いた関数定義はオーバーロードの個数爆発を防ぐうえで重要であると言えます。
+ドキュメンテーションを読むと分かるのですが、実際には上記の`QiDynamic`部分には単一の`double`値か`double[]`が渡されます。`QiDynamic`を使わないと`setAngles`関数のオーバーロードは2種類では済まず、具体的に言うと(第一引数、第二引数、第三引数がいずれも2種類の型を取るので)8個ほど必要だったことがうかがい知れます。`QiDynamic`を用いた関数定義はオーバーロードの個数爆発を防ぐうえで重要であると言えます。
 
-(`Dynamic`の話題についてはもっと紹介する予定ですが、現状では未整備です)
+<br/>
+実際に`QiDynamic`型の変数を作成する例をいくつか試しましょう。
+
+第一に、もっとも標準的な方法として、既存の`QiAnyValue`派生型変数に対して`ToDynamic`拡張メソッドを呼び出すと`QiDynamic`でラップされた変数を取得できます。簡単なコードは次のようなものです。
+
+```csharp
+QiString s = new QiString("Hello!");
+QiDynamic d = s.ToDynamic();
+
+Console.WriteLine(s.Dump());
+Console.WriteLien(d.Dump());
+```
+
+出力例です。
+```
+QiString:Hello!
+Dynamic
+  QiString:Hello!
+```
+
+<br/>
+もとの文字列が`Dynamic`によって包み込まれたような形になることが分かります。拡張メソッドによる表現以外では下記のコンストラクタ
+
+```csharp
+public class QiDynamic : QiAnyValue
+{
+    public QiDynamic(QiAnyValue v) { /* .. */ }
+}
+```
+
+<br/>
+これを利用する方法も簡潔です。上述した[暗黙の型変換](#3)を用いることで、次のようなコードが記述できます。
+
+```csharp
+var d = new QiDynamic(42);
+Console.WriteLine(d.Dump());
+```
+
+出力です。
+
+```
+Dynamic
+  QiInt:42
+```
+
+`42`は`int`型なので暗黙に`QiInt32`型へと変換され、これが`QiDynamic`によって包み込まれた値を生成します。
 
 
 <br/><br/>
