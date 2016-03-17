@@ -9,12 +9,12 @@ pages:
     - '関数の呼び出し': 'tutorials/method.md'
     - 'ALMemoryの使い方': 'tutorials/memory.md'
     - 'サービスの自作': 'tutorials/create_service.md'
-    - '動的型のリストを用いた複雑な処理': 'tutorials/use_dynamic_list.md'
     - 'Unityとの連携': 'tutorials/work_with_unityengine.md'
 - References:
     - '型の対応': 'references/type_rules.md'
     - 'コンテナ型': 'references/containers.md'
     - 'メタオブジェクト解析': 'references/read_metaobject.md'
+    - '動的型リストを使用する': 'references/use_dynamic_list.md'
 - FAQ: faq.md
 theme: readthedocs
 
