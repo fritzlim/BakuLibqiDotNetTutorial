@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>Unityとの連携 - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Unityとの連携";
+    var mkdocs_page_input_path = "tutorials\work_with_unityengine.md";
+    var mkdocs_page_url = "/tutorials/work_with_unityengine/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Unityとの連携</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#unity">Unityでライブラリを使うには</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-unity">1. Unityが利用できる環境</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-unity">2. Unity用ライブラリの利用</a></li>
+                
+                    <li><a class="toctree-l4" href="#3">3. 把握済みの問題</a></li>
+                
+                    <li><a class="toctree-l4" href="#githubunity">補足: GitHubの最新ソースをUnity用にビルドする</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/containers/">コンテナ型</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/read_metaobject/">メタオブジェクト解析</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/use_dynamic_list/">動的型リストを使用する</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/log_setting/">ログ出力を制御する</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../faq/">FAQ</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>Unityとの連携</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="unity">Unityでライブラリを使うには</h1>
+<hr />
+<p>本チュートリアルは今までと少し異なる用途を想定したものです。本チュートリアルでは<code>Windows</code>のみをターゲットとした.NETアプリケーションではなく、ゲームエンジンであるUnityEngine上で<code>Baku.LibqiDotNet</code>を利用する方法を紹介します。</p>
+<p><br/><br/></p>
+<h2 id="1-unity">1. Unityが利用できる環境</h2>
+<hr />
+<p><code>Windows</code>で<strong>32bitの</strong>Unity Editorを用いるか、<code>Mac</code>のUnity Editorを用いて<code>Baku.LibqiDotNet</code>と連携した開発が可能です。</p>
+<p>本記事以外の話題は基本的に<code>Windows</code>に焦点を絞ってきましたが、<code>Unity</code>の場合はターゲットとするプラットフォームが広く取れるため、原理的にはラップ元である<code>libqi</code>がサポートされる全てのプラットフォームで<code>Baku.LibqiDotNet</code>とUnityを連携させたアプリケーションを動作させられます。</p>
+<p>とはいうものの、パッケージの体裁として現状では<code>Windows</code>と<code>Mac</code>のみがサポートされています。これら以外のOS(デスクトップの<code>Linux</code>や<code>Android</code>など)上で<code>Baku.LibqiDotNet</code>を用いたUnityアプリケーションを動かしたい場合でも、マネージライブラリである<code>Baku.LibqiDotNet.dll</code>はそのまま利用できます。ただし、動作させたいOSに対応した<code>libqi</code>のネイティブライブラリをUnityプロジェクトのAssetへ正しく配置する必要があることに注意してください。例えばUnityでビルドしたプログラムを<code>Linux(Ubuntu)</code>上で動作させたい場合、<code>libqic.so</code>や<code>libqi.so</code>をはじめとするshared objectライブラリを配布されたNAOqi SDKなどからコピーしてくる必要があります。</p>
+<p><br/><br/></p>
+<h2 id="2-unity">2. Unity用ライブラリの利用</h2>
+<hr />
+<p>Unity用のパッケージファイル(<code>.unitypackage</code>)はNuGetでは提供していません。筆者が<code>Unity</code>向けにビルドしたパッケージを<strong><a href="https://drive.google.com/folderview?id=0BzVgwIMLJboJeWJmaFZ3Q25ENjQ&amp;usp=sharing">Google Drive</a></strong>に公開しているので、こちらからパッケージを取得してください。なるべく新しいバージョンを利用することを推奨しています。</p>
+<p>Unitypackageの利用上のポイントは以下の3点です。</p>
+<ul>
+<li>Windowsの場合<strong>32bitの</strong>Unity Editorを使わないとデバッグ実行が出来ません。</li>
+<li>パッケージの導入方法についてはzipファイル内の<code>readme.txt</code>に記載しています。</li>
+<li>ライブラリの内容は基本的にNuGetパッケージとほぼ同一ですが、Macに対応するためにNuGetパッケージに含まれないフォルダを追加で持っています。</li>
+</ul>
+<p><br/>
+.NETアプリケーションと同様のライブラリを移植しているため、Unityに特有な機能は一切提供していません。</p>
+<p><br/>
+Unity向けパッケージに含まれる<code>Baku.LibqiDotNet.dll</code>はNuGetパッケージに含まれる<code>Baku.LibqiDotNet.dll</code>とほぼ一致していますが、下記の2点のみが異なります。</p>
+<ul>
+<li>NuGetパッケージ版ではターゲットアーキテクチャが<code>x86</code>とされているのに対し、Unity向けパッケージでは<code>AnyCPU</code>がターゲット</li>
+<li>NuGetパッケージ版では<code>DllImport</code>で指定するアンマネージライブラリ名が<code>qic.dll</code>であるのに対し、Unity向けパッケージでは拡張子のない<code>qic</code>という名前指定が使われている</li>
+</ul>
+<p><br/>
+とくに<code>DllImport</code>に関する設定の差により、NuGetパッケージのライブラリをUnityに持ち込んだり、逆にUnity用のライブラリを.NETアプリケーション用に使おうとしても失敗します。ご注意ください。</p>
+<p><br/>
+上記の差異が存在する理由も簡単に補足しておきます。</p>
+<p>第一にUnity向けパッケージでターゲットアーキテクチャが<code>AnyCPU</code>となっている理由ですが、これはWindows/Macの両方に対応するためです。<code>Baku.LibqiDotNet</code>がラップしているアンマネージライブラリがWindowsでは32bit、Mac版では64bitのみのサポートとなっているため、マネージドライブラリは<code>AnyCPU</code>ターゲットであることが必須となっています。これに対してNuGetパッケージ版はWindowsでの利用のみを想定しているため、動作しない<code>x64</code>での実行を防ぐ目的で<code>x86</code>がターゲットとなっています。</p>
+<p>第二に<code>DllImport</code>の参照先が変わっている理由ですが、これについては<a href="http://docs.unity3d.com/ja/current/Manual/PluginsForDesktop.html">Unityマニュアル</a>にUnityに特有な<code>DllImport</code>の利用法が記載されているので、それに従っているだけです。</p>
+<p><br/><br/></p>
+<h2 id="3">3. 把握済みの問題</h2>
+<p><code>Windows</code>以外のOSで<code>Baku.LibqiDotNet</code>とUnityを連携させたアプリケーションを作成する場合、バイナリデータの送受信は(多分)できません。この制約は、<code>Baku.LibqiDotNet</code>がラップしている元のアンマネージライブラリである<a href="https://github.com/aldebaran/libqi-capi"><code>libqi-capi</code></a>の機能が部分的に実装されていないことに由来します。</p>
+<p>ただし<code>Windows</code>に関してはソースからビルドし直して対策を行っているので同様の問題はありません。対策の大まかな指針については<a href="https://github.com/malaybaku/BakuLibQiDotNet/issues/1">GitHubのissue</a>に掲載しているので、他のOSでどうにかバイナリデータを扱いたい場合は参考にしてください。</p>
+<p><br/><br/></p>
+<h2 id="githubunity">補足: GitHubの最新ソースをUnity用にビルドする</h2>
+<hr />
+<p>上で書いたようにUnity向けのパッケージはビルドして配布されていますが、アンマネージライブラリ群をUnityパッケージから取得し、ライブラリ本体である<code>Baku.LibqiDotNet.dll</code>についてだけ最新のソースを反映することも可能です。手順は次のようになります。</p>
+<ol>
+<li><a href="https://github.com/malaybaku/BakuLibQiDotNet">Baku.LibqiDotNet</a>のソースを取得する。あるいは手元でソースコードを適宜書き換える。</li>
+<li>ターゲットアーキテクチャを<code>AnyCPU</code>にし、構成を<code>Release</code>にする(※<code>Debug</code>構成でもいいですが動作速度などの理由からオススメできません)</li>
+<li><code>Baku.LibqiDotNet</code>プロジェクトのプロパティでコンパイルシンボルとして<code>UNITY</code>を定義</li>
+<li>ビルドする</li>
+<li>ビルド結果のうち<code>Baku.LibqiDotNet.dll</code>および<code>Baku.LibqiDotNet.xml</code>をUnityのAssetに含まれる既存のファイルから置き換える</li>
+</ol>
+<p><br/>
+<code>UNITY</code>というシンボルを定義する理由ですが、これはソース中の<a href="https://github.com/malaybaku/BakuLibQiDotNet/blob/master/Baku.LibqiDotNet/Baku.LibqiDotNet/QiApi/DllImportSettings.cs"><strong><code>DllImportSetting.cs</code></strong></a>でコンパイルシンボルに応じて<code>DllImport</code>属性に渡すファイル名を切り替えているためです。推奨はしませんが、シンボルによる分岐を用いずソースファイル自体を手作業で書き換えることによって、参照先ファイル名を切り替えても問題ありません。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../references/type_rules/" class="btn btn-neutral float-right" title="型の対応">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../create_service/" class="btn btn-neutral" title="サービスの自作"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../create_service/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../references/type_rules/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

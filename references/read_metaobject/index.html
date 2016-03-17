@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>メタオブジェクト解析 - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "メタオブジェクト解析";
+    var mkdocs_page_input_path = "references\read_metaobject.md";
+    var mkdocs_page_url = "/references/read_metaobject/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/work_with_unityengine/">Unityとの連携</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../containers/">コンテナ型</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">メタオブジェクト解析</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#metaobject">メタオブジェクト(Metaobject)解析</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-qi-framework">1. qi Frameworkのメタオブジェクトとは</a></li>
+                
+                    <li><a class="toctree-l4" href="#python">Pythonでメタオブジェクトを調査する</a></li>
+                
+                    <li><a class="toctree-l4" href="#2-bakulibqidotnet">2. Baku.LibqiDotNetでのメタオブジェクトに関するサポート</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../use_dynamic_list/">動的型リストを使用する</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../log_setting/">ログ出力を制御する</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../faq/">FAQ</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>References &raquo;</li>
+        
+      
+    
+    <li>メタオブジェクト解析</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="metaobject">メタオブジェクト(Metaobject)解析</h1>
+<hr />
+<p>本ページでは<code>qi Framework</code>のサービスに関する詳細情報を取得する方法を紹介します。</p>
+<p>体裁としてはチュートリアルに近い形式をとりますが、通常のプログラミングの範囲では知らなくても差し支えない話題であるためリファレンスの一環として掲載しています。</p>
+<p><br/><br/></p>
+<h2 id="1-qi-framework">1. qi Frameworkのメタオブジェクトとは</h2>
+<hr />
+<p><code>qi Framework</code>におけるメタオブジェクトとは<code>qi Framework</code>のサービスについて下記の情報</p>
+<ul>
+<li>サービスの名称</li>
+<li>サービスに登録されたプロパティ</li>
+<li>サービスに登録された関数(メソッド)</li>
+<li>サービスに登録されたシグナル(イベント)</li>
+</ul>
+<p>これらの情報を持った<code>QiValue</code>型のデータをさします。データは辞書(<code>Map</code>)と配列(<code>List</code>)が入れ子になった形式で表現されます。</p>
+<p><br/><br/></p>
+<h2 id="python">Pythonでメタオブジェクトを調査する</h2>
+<hr />
+<p>メタオブジェクトの調査はREPL(対話型モード)に相性がよいタスクであるため、以下に<code>Python</code>による方法の例を示します。スクリプトではなく対話環境でコードを実行し、適宜<code>dir</code>などの関数を利用してデータの中身を調べていくのが良いでしょう。</p>
+<pre><code class="python">import qi
+
+s = qi.Session()
+#アドレスは接続先に合わせる
+s.connect(&quot;xxx.xxx.xxx.xxx&quot;)
+#典型的な例として音声合成APIをターゲットにしてみる
+tts = s.service(&quot;ALTextToSpeech&quot;)
+
+mo = tts.metaObject()
+mo.keys()
+#&gt;&gt; ['signals', 'description', 'methods', 'properties']
+
+methods = mo[&quot;methods&quot;]
+methods.keys()
+#整数値リスト
+#&gt;&gt;[0L, 1L, 2L, 3L, 132L, ..]
+
+print(methods[0L])
+#&gt;&gt; {'description': '', 
+#&gt;&gt;  'parameters': [], 
+#&gt;&gt;  'parametersSignature': '(IIL)', 
+#&gt;&gt;  'name': 'registerEvent', 
+#&gt;&gt;  'returnDescription': '', 
+#&gt;&gt;  'returnSignature': 'L', 
+#&gt;&gt;  'uid': 0L}
+
+sayMethods = [(id, info) for (id, info) in methods if info[&quot;name&quot;] == &quot;say&quot;]
+
+print(sayMethods)
+#&gt;&gt; [(114L, { .. }), (115L, { .. })]
+
+print(methods[114L])
+#&gt;&gt; {'description': 'Performs the text-to-speech operations : it takes a std::string as input and outputs a sound in both speakers. String encoding must be UTF8.',
+#&gt;&gt; 'name': 'say',
+#&gt;&gt; 'parameters': [{'description': 'Text to say, encoded in UTF-8.',
+#&gt;&gt;               'name': 'stringToSay'}],
+#&gt;&gt; 'parametersSignature': '(s)',
+#&gt;&gt; 'returnDescription': '',
+#&gt;&gt; 'returnSignature': 'v',
+#&gt;&gt; 'uid': 114L}
+
+print(methods[115L])
+#&gt;&gt; {'description': 'Performs the text-to-speech operations in a specific language: it takes a std::string as input and outputs a sound in both speakers. String encoding must be UTF8. Once the text is said, the language is set back to its initial value.',
+#&gt;&gt;  'name': 'say',
+#&gt;&gt;  'parameters': [{'description': 'Text to say, encoded in UTF-8.',
+#&gt;&gt;                  'name': 'stringToSay'},
+#&gt;&gt;                 {'description': 'Language used to say the text.',
+#&gt;&gt;                  'name': 'language'}],
+#&gt;&gt;  'parametersSignature': '(ss)',
+#&gt;&gt;  'returnDescription': '',
+#&gt;&gt;  'returnSignature': 'v',
+#&gt;&gt;  'uid': 115L}
+
+</code></pre>
+
+<p><br/>
+メタオブジェクト取得の第一歩は取得したオブジェクトの<code>metaObject</code>関数を呼び出し、結果を取得することです。</p>
+<p>上記の例では<code>ALTextToSpeech</code>のメタオブジェクトを取得し、<code>"say"</code>という名前の関数に関する情報を確認しています。このような作業を行うと、例えば次のような重要な情報を取得できます。</p>
+<ul>
+<li><code>"say"</code>関数は2種類のオーバーロードを持っている。</li>
+<li>関数のシグネチャは<code>"(ss)"</code>と<code>"(s)"</code>、つまり文字列を二つ引数にとるのと単一の文字列を引数に取るものがある。</li>
+<li>いずれの関数も戻り値は<code>"v"</code>つまり戻り値の無い関数である。</li>
+</ul>
+<p><br/><br/></p>
+<h2 id="2-bakulibqidotnet">2. Baku.LibqiDotNetでのメタオブジェクトに関するサポート</h2>
+<hr />
+<p><code>Baku.LibqiDotNet</code>はNuGetパッケージver2.0.0相当版の時点でメタオブジェクトの取得をサポートしていません(内部的に使っていますが外部へ公開していません)。端的に言うと、上記の<code>Python</code>コードで利用している<code>metaObject</code>関数に相当するメソッドが<code>internal</code>な関数、つまりアセンブリ内部でのみ利用できる関数として定義されています。</p>
+<p>関数を公開しなかった理由は、ver2.0.0を公開した時点で次のように考えていたためです。すなわち、<code>C#</code>で作成したロボット向けアプリケーションはサービスの事前知識を全て持っているはずであり、メタオブジェクト取得を含む動的な処理は基本的に必要ないだろう、と。しかし一部の凝ったGUIアプリケーションやサービス情報を徹底的に調べるようなアプリケーションにおいてこの考えは不適切です。次のバージョンアップではメタオブジェクトの取得をサポートする予定です。</p>
+<p><br/>
+NOTE: <a href="https://github.com/malaybaku/BakuLibQiDotNet">GitHub</a>のdeveloper branchではメタオブジェクトの取得を行えるコードを公開しています。<code>QiObject.GetMetaObject</code>関数がメタオブジェクトを取得するために利用できます。</p>
+<pre><code class="csharp">var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+var metaObject = tts.GetMetaObject();
+
+//メタオブジェクトの内容を全て出力する
+Console.WriteLine(metaObject.Dump());
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../use_dynamic_list/" class="btn btn-neutral float-right" title="動的型リストを使用する">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../containers/" class="btn btn-neutral" title="コンテナ型"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../containers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../use_dynamic_list/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

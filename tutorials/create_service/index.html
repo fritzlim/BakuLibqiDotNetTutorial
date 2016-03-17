@@ -98,12 +98,17 @@
                 
                     <li><a class="toctree-l4" href="#1">1. サービスの作成と呼び出し</a></li>
                 
-                    <li><a class="toctree-l4" href="#2">2. サービスの登録</a></li>
-                
-                    <li><a class="toctree-l4" href="#3">3. 登録されたサービスの呼び出し</a></li>
+                    <li><a class="toctree-l4" href="#2">2. サービスの登録/登録されたサービスの呼び出し</a></li>
                 
             
             </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../work_with_unityengine/">Unityとの連携</a>
         
     </li>
 
@@ -125,12 +130,40 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../references/troubles/">困ったときに: 低レイヤAPI</a>
+        <a class="" href="../../references/containers/">コンテナ型</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/read_metaobject/">メタオブジェクト解析</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/use_dynamic_list/">動的型リストを使用する</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../references/log_setting/">ログ出力を制御する</a>
         
     </li>
 
         
     </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../faq/">FAQ</a>
+        
+    </li>
 <li>
           
         </ul>
@@ -245,13 +278,118 @@ objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
 <p><br/>
 上記で紹介した以外の型を指定したい場合、<a href="http://doc.aldebaran.com/libqi/api/cpp/type/signature.html"><strong>qi Frameworkドキュメント</strong></a>に対応表があるので参考にしてください。</p>
 <p><br/><br/></p>
-<h2 id="2">2. サービスの登録</h2>
+<h2 id="2">2. サービスの登録/登録されたサービスの呼び出し</h2>
 <hr />
-<p>(未整備です)</p>
-<p><br/><br/></p>
-<h2 id="3">3. 登録されたサービスの呼び出し</h2>
-<hr />
-<p>(未整備です)</p>
+<p>前節の例ではサービスをローカルなプロセスで作成できることを確認しました。これを実際にリモートのロボットに登録し、公開するには<code>QiSession.RegisterService</code>関数を用います。プログラムの例は次の通りです。</p>
+<pre><code class="csharp">using System;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(
+        &quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    var session = QiSession.Create(address);
+
+    session.Listen(&quot;tcp://0.0.0.0:0&quot;).Wait();
+    Console.WriteLine(&quot;Listen preparation completed&quot;);
+
+    var objBuilder = QiObjectBuilder.Create();
+    objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
+    {
+        Console.WriteLine(&quot;test was called&quot;);
+        return QiValue.Void;
+    });
+    objBuilder.AdvertiseMethod(&quot;twice::i(i)&quot;, (sig, arg) =&gt;
+    {
+        Console.WriteLine(&quot;twice was called&quot;);
+        int i = (int)arg[0];
+        return new QiInt32(i * 2).QiValue;
+    });
+
+    var obj = objBuilder.BuildObject();
+
+    //ローカルでの呼び出しはしない
+    //obj[&quot;test&quot;].Call();
+    //int res = (int)obj[&quot;twice&quot;].Call(21);
+    //Console.WriteLine($&quot;Res = {res}&quot;);
+
+    uint id = (uint)session.RegisterService(
+        &quot;MyService&quot;, 
+        objBuilder.BuildObject()
+        )
+        .GetUInt64(0L);
+
+    //リモートに登録したものをロードして使う
+    var myService = session.GetService(&quot;MyService&quot;);
+    myService[&quot;test&quot;].Call();
+    int res = (int)myService[&quot;twice&quot;].Call(21);
+    Console.WriteLine($&quot;Res = {res}&quot;);
+
+    session.UnregisterService(id);
+}
+</code></pre>
+
+<p><br/>
+実行例です。</p>
+<pre><code>[I] 1458052222.196998 11724 qimessaging.session: Session listener created on tcp://0.0.0.0:0
+[I] 1458052222.202500 11724 qimessaging.transportserver: TransportServer will listen on: tcp://192.168.1.3:63893
+[W] 1458052222.202500 3664 qi.path.sdklayout: No Application was created, trying to deduce paths
+[I] 1458052222.204500 11724 qimessaging.transportserver: TransportServer will listen on: tcp://192.168.56.1:63893
+[I] 1458052222.208564 11724 qimessaging.transportserver: TransportServer will listen on: tcp://127.0.0.1:63893
+Listen preparation completed
+Complete sig:test::v()
+test was called
+Complete sig:twice::i(i)
+twice was called
+Res = 42
+</code></pre>
+
+<p><br/>
+<code>[I]</code>や<code>[W]</code>で始まっているのはそれぞれ<code>libqi</code>ライブラリから送出されているインフォメーションログおよび警告ログです。特に気にする必要はありませんが、しっかり確認するとライブラリの動作が細かく見られます。</p>
+<p><br/>
+その下の出力を見ていくと、登録したサービスを取得し、定義した関数を呼び出せていることが分かります。自作サービスを登録するプログラムの注意点として、<code>RegisterService</code>関数を呼び出す前に<code>QiSession.Listen</code>関数を使い、外部からのサービス呼び出しを許可する必要があります。</p>
+<pre><code class="csharp">session.Listen(&quot;tcp://0.0.0.0:0&quot;).Wait();
+Console.WriteLine(&quot;Listen preparation completed&quot;);
+</code></pre>
+
+<p><br/>
+明示的にサービスを登録解除する場合は<code>Unregister</code>関数を呼び出します。</p>
+<pre><code class="csharp">session.UnregisterService(id);
+</code></pre>
+
+<p><br/>
+なお、上記のプログラムではサービスの作成プロセスと呼び出しプロセスが同じであるため、リモート動作の確認という意味では釈然としないように感じる所があったかもしれません。よりしっかりとしたデバッグを行うには次のような構成を取るとよいでしょう。</p>
+<ol>
+<li>上記のプログラムとほぼ同じ処理を行い、<code>UnregisterService</code>を呼び出す前に<code>Console.ReadLine</code>などでプログラムを待機状態に入らせる</li>
+<li>別のプログラム(<code>C#, Python</code>あるいは<code>Choregraphe</code>による方法でも構いません)から登録したサービスを呼び出す</li>
+</ol>
+<p>例えば<code>Python</code>のNaoqi SDKが入っているPCであれば、次のようなコードで上記のサービスを利用できるはずです。</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+import qi
+
+s = qi.Session()
+#アドレス指定
+s.connect(&quot;xxx.xxx.xxx.xxx&quot;)
+
+myservice = s.service(&quot;MyService&quot;)
+#呼び出しにより、C#コンソール側に出力が出る
+myservice.test()
+
+x = myservice.twice(21)
+print(x)
+#&gt;&gt;&gt; 42
+
+</code></pre>
+
+<p><br/>
+最後に蛇足ですが、.NETならではの実用的な機能を提供したい場合、<code>ALMemory</code>との連動や<code>Kinect/Hololens</code>など<code>Windows</code>系デバイスとの組み合わせ、<code>Unity</code>でのデバイス連携によるサービス登録などは有力な候補となり得ます。選択肢はけっこう広いので、アイデアを膨らませていろいろ試してみてください。</p>
               
             </div>
           </div>
@@ -259,7 +397,7 @@ objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../references/type_rules/" class="btn btn-neutral float-right" title="型の対応">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../work_with_unityengine/" class="btn btn-neutral float-right" title="Unityとの連携">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../memory/" class="btn btn-neutral" title="ALMemoryの使い方"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -291,7 +429,7 @@ objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
         <span><a href="../memory/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../references/type_rules/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../work_with_unityengine/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

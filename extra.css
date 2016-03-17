@@ -2,6 +2,10 @@ ul code {
   font-size: 100%;
 }
 
+ol code {
+  font-size: 100%;
+}
+
 code, .hljs {
   font-size: 100%;
 }
@@ -12,8 +16,8 @@ code, .rst-content tt {
 }
 
 .wy-nav-content-wrap {
-  background: #D0D0D0;
+  background: #C8C8E0;
 }
 .wy-nav-content {
-  background: #D0D0D0;
+  background: #C8C8E0;
 }

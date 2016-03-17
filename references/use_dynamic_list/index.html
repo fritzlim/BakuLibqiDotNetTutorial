@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Baku">
+  
+  <title>動的型リストを使用する - LibqiDotNet Doc</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "動的型リストを使用する";
+    var mkdocs_page_input_path = "references\use_dynamic_list.md";
+    var mkdocs_page_url = "/references/use_dynamic_list/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> LibqiDotNet Doc</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Tutorials</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/hello_world/">Hello World</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/method/">関数の呼び出し</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/memory/">ALMemoryの使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/create_service/">サービスの自作</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/work_with_unityengine/">Unityとの連携</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>References</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type_rules/">型の対応</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../containers/">コンテナ型</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../read_metaobject/">メタオブジェクト解析</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">動的型リストを使用する</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#_1">動的型リストを使用する</a></li>
+                
+                    <li><a class="toctree-l4" href="#1-qilistqidynamic">1. 動的型リスト(QiList&lt;QiDynamic&gt;)の利点とは</a></li>
+                
+                    <li><a class="toctree-l4" href="#2">2. 動的型リストを作成する</a></li>
+                
+                    <li><a class="toctree-l4" href="#3">3. ガイドライン: ユーザビリティのために</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../log_setting/">ログ出力を制御する</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../faq/">FAQ</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">LibqiDotNet Doc</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>References &raquo;</li>
+        
+      
+    
+    <li>動的型リストを使用する</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">動的型リストを使用する</h1>
+<p>ここでは<code>qi Framework</code>のデータ構造のうち配列(<code>QiList&lt;T&gt;</code>)と動的型(<code>QiDynamic</code>)を組み合わせてデータを渡す例を、簡単な具体的とともに紹介します。</p>
+<p><br/> <br/></p>
+<h2 id="1-qilistqidynamic">1. 動的型リスト(<code>QiList&lt;QiDynamic&gt;</code>)の利点とは</h2>
+<hr />
+<p>本チュートリアルのタイトルは誤解を生む可能性があるので、最初に共通認識を持つために「動的型リスト」という言葉が意味する所を確認しておきます。</p>
+<p>動的型リストとは<code>Baku.LibqiDotNet</code>のクラスで言うと<code>QiList&lt;QiDynamic&gt;</code>のことで、これは実質的に「要素ごとに型が異なってもよい配列」を表します。<code>C#</code>風に書くなら<code>object[]</code>による表現が適切でしょう。</p>
+<pre><code class="csharp">var hoge = new object[] { &quot;Foo&quot;, 42, 1.5, true };
+</code></pre>
+
+<p><br/>
+このようなデータはタプルと違って個数の制約がなく、より一般的なデータを保持するのに使えます。このデータ形式が必要なケースは珍しいですが、複雑なデータを戻り値として返したい場合は検討に値する選択肢です。実用されている例で言うと、ロボットのカメラから現在見ている画像を取得する<a href="http://doc.aldebaran.com/2-1/naoqi/vision/alvideodevice-api.html#ALVideoDeviceProxy::getImageRemote__ssCR">ALVideoDevice::getImageRemote</a>関数の戻り値は<a href="http://doc.aldebaran.com/2-1/naoqi/vision/alvideodevice-api.html#image">image</a>という値です。<code>image</code>は単なる画像バイナリデータに加えてバイナリデータの色空間情報やタイムスタンプ、撮像時に見ていた視界を表す角度などの情報も同時に渡すために、およそ次のような内容を保持しています。</p>
+<pre><code class="csharp">var image = new object[] 
+{
+    new Int32(..), 
+    ..., 
+    new Int32(..), 
+    new byte[] { .. }, 
+    new Double(..), 
+    ..., 
+    new Double(..)
+};
+</code></pre>
+
+<p><br/>
+上記のようなデータは動的型リストで表現するのが適切です。</p>
+<p><br/> <br/></p>
+<h2 id="2">2. 動的型リストを作成する</h2>
+<hr />
+<p>前口上が長くなりましたが、実は動的型リストを作るのはそこまで難しい作業ではありません。<a href="./method.md">関数呼び出し</a>で紹介した<code>QiAnyValue</code>型の暗黙キャストのテクニックと拡張メソッドである<code>ToQiDynamicList</code>関数を用いることで、それなりに簡素な表現で動的型リストが作成可能です。以下はセッション接続を行わず、ローカル環境で動的型リストを作成して使用する例を示しています。</p>
+<pre><code class="csharp">using System;
+using System.Linq;
+
+using Baku.LibqiDotNet;
+using Baku.LibqiDotNet.Path;
+
+
+
+static void Main(string[] args)
+{
+    PathModifier.AddEnvironmentPath(&quot;dlls&quot;, PathModifyMode.RelativeToEntryAssembly);
+
+    //string address = &quot;tcp://xxx.xxx.xxx.xxx:9559&quot;;
+    //var session = QiSession.Create(address);
+
+    //1. 単にローカルで動的型リストを作成してデバッグ出力
+    var dList = new QiAnyValue[]
+    {
+        &quot;Hello&quot;,
+        42,
+        true
+    }.ToQiDynamicList();
+
+    Console.WriteLine(dList.Dump());
+
+    //2. サービスの戻り値として動的型リストが使えることを確認
+    var builder = QiObjectBuilder.Create();
+    builder.AdvertiseMethod(&quot;test::m()&quot;, (sig, arg) =&gt;
+    {
+        return new QiAnyValue[] { &quot;Hello&quot;, 42, true }
+            .ToQiDynamicList()
+            .QiValue;
+    });
+
+    var service = builder.BuildObject();
+    Console.WriteLine(service[&quot;test&quot;].Call().Dump());
+}
+</code></pre>
+
+<p>出力例です。</p>
+<pre><code>List[3]:
+  Dynamic
+    QiString:Hello
+  Dynamic
+    QiInt:42
+  Dynamic
+    QiInt:1
+
+Complete sig:test::m()
+List[3]:
+  Dynamic
+    QiString:Hello
+  Dynamic
+    QiInt:42
+  Dynamic
+    QiInt:1
+</code></pre>
+
+<p><br/></p>
+<p>単一のリストで複数の型のデータを保持できている事が分かります。参考までに、<code>ALVideoDevice::getImageRemote</code>関数を標準的な方法で呼び出し、得られた戻り値を出力した例も提示しておきます。</p>
+<pre><code>Dynamic
+  List&lt;QiDynamic&gt;[12]
+    Dynamic
+      QiInt:320
+    Dynamic
+      QiInt:240
+    Dynamic
+      QiInt:3
+    Dynamic
+      QiInt:11
+    Dynamic
+      QiInt:0
+    Dynamic
+      QiInt:0
+    Dynamic
+      QiRaw
+    Dynamic
+      QiInt:0
+    Dynamic
+      QiFloat:0.499164193868637
+    Dynamic
+      QiFloat:0.386590451002121
+    Dynamic
+      QiFloat:-0.499164193868637
+    Dynamic
+      QiFloat:-0.386590451002121
+</code></pre>
+
+<p><br/>
+こちらの例でも動的型リストが使われていることが分かります。</p>
+<p><br/> <br/></p>
+<h2 id="3">3. ガイドライン: ユーザビリティのために</h2>
+<hr />
+<p>本ページで紹介したように、動的型リストを用いることで複雑なデータをひとまとめにして送受信することが可能です。これは便利な機構ではありますが、ユーザから見ると渡されるデータの内容が自明でなくなるという欠点があるのもまた事実です。動的型リストを利用する場合、ユーザ向けのドキュメンテーションによってデータに含まれる内容を正しく伝える事がとりわけ重要となる事に注意してください。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../log_setting/" class="btn btn-neutral float-right" title="ログ出力を制御する">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../read_metaobject/" class="btn btn-neutral" title="メタオブジェクト解析"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../read_metaobject/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../log_setting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

@@ -95,6 +95,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../tutorials/work_with_unityengine/">Unityとの連携</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -117,11 +124,9 @@
                 
                     <li><a class="toctree-l4" href="#3">3. 暗黙の型変換</a></li>
                 
-                    <li><a class="toctree-l4" href="#4-list-map-tuple">4. コンテナ型(List, Map, Tuple)</a></li>
+                    <li><a class="toctree-l4" href="#4-qidynamic">4. 動的型(QiDynamic)</a></li>
                 
-                    <li><a class="toctree-l4" href="#5-dyanmic">5. 動的型(Dyanmic)</a></li>
-                
-                    <li><a class="toctree-l4" href="#6-qivaluevoid">6. QiValue.Void</a></li>
+                    <li><a class="toctree-l4" href="#5-qivaluevoid">5. QiValue.Void</a></li>
                 
             
             </ul>
@@ -131,12 +136,40 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../troubles/">困ったときに: 低レイヤAPI</a>
+        <a class="" href="../containers/">コンテナ型</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../read_metaobject/">メタオブジェクト解析</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../use_dynamic_list/">動的型リストを使用する</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../log_setting/">ログ出力を制御する</a>
         
     </li>
 
         
     </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../faq/">FAQ</a>
+        
+    </li>
 <li>
           
         </ul>
@@ -177,12 +210,12 @@
               
                 <h1 id="qi-framework">qi Frameworkの型付け</h1>
 <hr />
-<p>このページでは、<code>qi Framework</code>の内部で定義されている変数の型を<code>Python</code>の型や<code>Baku.LibqiDotNet</code>の型との互換性という観点で紹介し、特にコンテナ型についても説明を与えます。</p>
+<p>このページでは<code>qi Framework</code>の内部で定義されている変数の型を<code>Python</code>の型などとの互換性という観点で紹介し、いくつかの特殊な型についても紹介しています。</p>
 <p><br/><br/></p>
 <h2 id="1">1. 型の対応表</h2>
 <hr />
-<p><strong><a href="http://doc.aldebaran.com/libqi/api/transtyping.html">公式ドキュメント</a></strong>には<code>qi Framework</code>の内部定義型(<code>qiType</code>と呼ばれます)と<code>C++</code>, <code>Python</code>, <code>Java</code>などの型に関する対応が記述されています。以下には<code>qiType, Python, C#</code>間における型の対応づけに加え、厳密に型対応を取るために用意された<code>Baku.LibqiDotNet</code>の型を記載しています。</p>
-<p>一つだけ公式ドキュメントと異なる注意として、下記の表では最下部に<code>Raw</code>型というバイナリデータ型を追記していることに注意してください。</p>
+<p><strong><a href="http://doc.aldebaran.com/libqi/api/transtyping.html">公式ドキュメント</a></strong>には<code>qi Framework</code>の内部定義型(<code>qiType</code>と呼ばれます)と<code>C++</code>, <code>Python</code>, <code>Java</code>などの型に関する対応が記述されています。以下には<code>qiType</code>, <code>Python</code>, <code>C#</code>間における型の対応に加え、厳密に型対応を取るために用意された<code>Baku.LibqiDotNet</code>の型を記載しています。</p>
+<p>一つだけ公式ドキュメントと異なる注意として、下記の表では最下部に<code>Raw</code>型というバイナリデータ型を追記していることに注意してください。<code>Raw</code>型は公式の対応表には載っていませんが<a href="http://doc.aldebaran.com/libqi/api/cpp/type/signature.html">シグネチャAPI</a>などには記載があります。</p>
 <table>
 <thead>
 <tr>
@@ -274,13 +307,13 @@
 <tr>
 <td>List<T></td>
 <td>list</td>
-<td>QiList<T></td>
+<td>QiList&lt;T&gt;</td>
 <td>-</td>
 </tr>
 <tr>
 <td>Mat<T,U></td>
 <td>dict</td>
-<td>QiMap<T,U></td>
+<td>QiMap&lt;TKey,TValue&gt;</td>
 <td>-</td>
 </tr>
 <tr>
@@ -323,6 +356,8 @@ var s3 = new QiString(&quot;Create QiString value from string&quot;);
 
 <p><br/><br/></p>
 <h2 id="3">3. 暗黙の型変換</h2>
+<h3 id="3-1-qianyvalue"><strong>3-1. QiAnyValueに関する暗黙型変換 </strong></h3>
+<hr />
 <p>前節で示した通り<code>QiAnyValue</code>の派生型は通常のコンストラクタを用いて作成できます。しかし常にこのような書き方をするとコードが煩雑になってしまいます。</p>
 <p>例えば、ロボットのカメラから画像を取得する設定を行う<code>ALVideoDevice</code>の<code>subscribeCamera</code>関数は次のようなシグネチャを持っています。</p>
 <pre><code>string subscribeCamera(string id, int cameraType, int resolution, int colorspace, int fps);
@@ -356,19 +391,41 @@ string idName = video[&quot;subscribeCamera&quot;].Call(&quot;Hoge&quot;, 0, 1, 
 </code></pre>
 
 <p><br/>
-他の組み込み型等についても同様で、<a href="#1"><strong>型の対応表</strong></a>に記載された<code>bool, string, byte[]</code>と整数型、小数型のそれぞれについては暗黙のキャストが可能です。使用頻度が高いと想定される<code>int[], double[], string[]</code>についても暗黙のキャストをサポートしています。したがって、見かけ上はこれら組み込み型(と一部の配列)に関してはそのまま引数に代入することが出来ます。逆に、二重リスト(リストのリスト)のような複雑なデータ構造を指定する場合はキャストは利用できないため、<code>QiAnyValue</code>の派生型のコンストラクタやファクトリメソッドを用いて正しくインスタンスを生成してください。二重リストを用いる具体例は<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>で紹介しています。</p>
-<p><br/><br/></p>
-<h2 id="4-list-map-tuple">4. コンテナ型(List, Map, Tuple)</h2>
-<p><code>qi Framework</code>は3種類のコンテナ型をサポートしていますが、実態としては配列型データを表す<code>QiList&lt;T&gt;</code>が非常に多く用いられており、辞書式データを表す<code>QiMap</code>はまず使われません。タプルを表現する<code>QiTuple</code>についても、イベントのコールバックで<code>Tuple</code>を渡される(<a href="../../tutorials/memory/"><strong>ALMemoryの使い方</strong></a>等参照)ような珍しいケースを除けば扱わないデータ型です。またタプルからのデータ読み取りは<code>QiList&lt;T&gt;</code>からのデータ読み取りとほとんど変わりません。したがって、ここでは配列型のデータ構造である<code>QiList&lt;T&gt;</code>に焦点を絞って紹介します。</p>
+他の組み込み型等についても同様で、<a href="#1"><strong>型の対応表</strong></a>に記載された<code>bool, string, byte[]</code>と整数型(<code>int, ushort</code>など)、小数型(<code>float, double</code>)について暗黙のキャストが可能です。使用頻度が高いと想定される<code>int[], double[], string[]</code>についても暗黙のキャストをサポートしています。したがって、見かけ上はこれら組み込み型(と一部の配列)はそのまま引数に代入することが出来ます。逆に、二重リスト(リストのリスト)のような複雑なデータ構造を指定する場合はキャストは利用できないため、<code>QiAnyValue</code>の派生型のコンストラクタやファクトリメソッドを用いて正しくインスタンスを生成してください。二重リストを用いる具体例は<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>で紹介しています。</p>
+<p><br/></p>
+<h3 id="3-2-qivalue"><strong>3-2. QiValueに関する暗黙の型変換 </strong></h3>
+<hr />
+<p>先ほどの例では組み込み型を含むいくつかの型が<code>QiAnyValue</code>型へと暗黙に変換できる事により、関数の呼び出しコードが簡潔に書けることを紹介しました。</p>
+<p>もう一つの機能提供として、<code>QiAnyValue</code>から派生しているそれぞれの組み込み型に関しても、派生型に対応する型からの暗黙型変換を認めています。たとえば次のようなコードが可能です。</p>
+<pre><code class="csharp">QiString s = &quot;Hello, World!&quot;;
+QiInt32 x = 42;
+</code></pre>
+
 <p><br/>
-何度も書いていますが、配列型のデータ構造は<code>QiList&lt;T&gt;</code>であり、これはジェネリッククラスです。<code>T</code>は<code>QiAnyValue</code>の派生型である必要があります。<code>Baku.LibqiDotNet</code>には非ジェネリックな<code>QiList</code>というクラスも存在しますが、これは静的クラスで、単に<code>QiList&lt;T&gt;</code>を作成するファクトリメソッドを定義しただけのクラスです。</p>
+上のコードは<code>string</code>から<code>QiString</code>への暗黙の型変換ができることを示しています。<code>int</code>についても同様です。このようなキャストを利用すると、コンテナ型(とくに辞書<code>QiMap&lt;TKey, TValue&gt;</code>)の初期化が簡潔に記述できます。</p>
+<pre><code class="csharp">QiMap&lt;QiString, QiInt32&gt; d = new Dictionary&lt;QiString, QiInt32&gt;()
+{
+    [&quot;foo&quot;] = 10,
+    [&quot;bar&quot;] = 42
+}.ToQiMap();
+</code></pre>
+
 <p><br/>
-<code>QiList&lt;T&gt;</code>を作成するには<code>QiList.Create</code>関数を用いるのが最も簡単です。入れ子リストを作るような複雑な例については<a href="../../tutorials/method/"><strong>関数の呼び出し</strong></a>に記載していますが、ここではより典型的な1次元配列を作る方法を紹介します。</p>
-<p>(続きを書く予定ですが現状では未整備です)</p>
+上記の<code>"foo"</code>や<code>10</code>を与えている箇所には本来ディクショナリのキーと値である<code>QiString</code>型や<code>QiInt32</code>型を指定しなければなりません。カジュアルな記法を嫌う場合こう書く必要があります。</p>
+<pre><code class="csharp">QiMap&lt;QiString, QiInt32&gt; d = new Dictionary&lt;QiString, QiInt32&gt;()
+{
+    [new QiString(&quot;foo&quot;)] = new QiInt32(10),
+    [new QiString(&quot;bar&quot;)] = new QiInt32(42)
+}.ToQiMap();
+</code></pre>
+
+<p><br/>
+暗黙の型変換によって表現が簡素になっていることが分かります。</p>
 <p><br/><br/></p>
-<h2 id="5-dyanmic">5. 動的型(Dyanmic)</h2>
-<p>先に忠告しておきますが、これは<code>C#</code>の<code>dynamic</code>とはまったく違います！<code>qi Framework</code>の<code>Dynamic</code>が提供する機能はより単純ですが、その分言語に依存していない便利な機構です。<code>Dynamic</code>は1要素のリストあるいはタプルとみなすことが出来る、ある種のコンテナクラスです。ただし<code>QiList&lt;T&gt;</code>やタプル(<code>QiTuple</code>)と異なり、<code>Dynamic</code>は任意の型のデータを保持できるという特徴があります。以下は実際には動作しない疑似コードですが、コンセプトとして次のような処理が可能です。</p>
-<pre><code>var qid = new QiFramework.Dynamic(new QiInt32(10));
+<h2 id="4-qidynamic">4. 動的型(QiDynamic)</h2>
+<hr />
+<p>先に忠告しておきますが、これは<code>C#</code>の<code>dynamic</code>とはまったく違います！<code>qi Framework</code>の<code>QiDynamic</code>型が提供する機能は<code>C#</code>の<code>dynamic</code>に比べると非常に単純ですが、その分言語に依存しない便利な機構を提供しています。<code>QiDynamic</code>は1要素のリストあるいはタプルとみなすことが出来る、ある種のコンテナクラスです。ただし配列(<code>QiList&lt;T&gt;</code>)やタプル(<code>QiTuple</code>)と異なり、<code>QiDynamic</code>は任意の型のデータを保持できるという特徴があります。以下は実際には動作しない疑似コードですが、<code>QiDynamic</code>のコンセプトを示しています。</p>
+<pre><code>var qid = new QiFramework.QiDynamic(new QiInt32(10));
 var x = qid.Value; //xはQiInt32型の変数
 
 b.Value = new QiString(&quot;Hello!&quot;);
@@ -379,26 +436,79 @@ var z = qid.Value; //zはQiBool型の変数
 </code></pre>
 
 <p><br/>
-上の例では<code>Value</code>プロパティに次々と異なる型の変数を代入し、取り出しています。<code>qid</code>変数自体の型は<code>Dynamic</code>のまま不変ですが、<code>Value</code>へのアクセスによって見かけ上型が動的に変化しているように扱えていることが分かります。</p>
+上の例では<code>Value</code>プロパティに次々と異なる型の変数を代入し、取り出しています。<code>qid</code>変数自体の型は<code>QiDynamic</code>のまま不変ですが、<code>Value</code>へのアクセスによって見かけ上型が動的に変化しているように扱えていることが分かります。</p>
 <p><br/>
-<code>Dynamic</code>型は<code>qi Framework</code>において、事前に渡される関数のシグネチャが固定しづらい時に利用されています。例えば運動を制御する<code>ALMotion</code>では指定した関節の目標となる角度値を指定できる<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::setAngles__AL::ALValueCR.AL::ALValueCR.floatCR"><code>setAngles</code></a>関数がありますが、この関数は内部的に2種類のオーバーロードを持っており、シグネチャがおよそ次のようになっています。</p>
-<pre><code>void setAngles(QiString name, Dynamic angles, Dynamic fraction);
-void setAngles(QiList&lt;QiString&gt; names, Dynamic angles, Dynamic fraction);
+<code>QiDynamic</code>型は<code>qi Framework</code>において、事前に渡される関数のシグネチャが固定しづらい時に利用されています。例えば運動を制御する<code>ALMotion</code>では指定した関節の目標となる角度値を指定できる<a href="http://doc.aldebaran.com/2-1/naoqi/motion/control-joint-api.html#ALMotionProxy::setAngles__AL::ALValueCR.AL::ALValueCR.floatCR"><code>setAngles</code></a>関数がありますが、この関数は内部的に2種類のオーバーロードを持っており、シグネチャがおよそ次のようになっています。</p>
+<pre><code>void setAngles(QiString name, QiDynamic angles, QiDynamic fraction);
+void setAngles(QiList&lt;QiString&gt; names, QiDynamic angles, QiDynamic fraction);
 </code></pre>
 
 <p><br/>
-ドキュメンテーションを読むと分かるのですが、実際には上記の<code>Dynamic</code>部分には単一の<code>double</code>値か<code>double[]</code>が渡されます。<code>Dynamic</code>を使わなかった場合、上記関数のオーバーロードは(第一引数、第二引数、第三引数がいずれも2パタンずつあるので)8個ほど必要だったことがうかがい知れます。<code>Dynamic</code>を用いた型の制約緩和によって、オーバーロードの個数を減らせていることは注目に値するでしょう。</p>
-<p>(<code>Dynamic</code>の話題についてはもっと紹介する予定ですが、現状では未整備です)</p>
+ドキュメンテーションを読むと分かるのですが、実際には上記の<code>QiDynamic</code>部分には単一の<code>double</code>値か<code>double[]</code>が渡されます。<code>QiDynamic</code>を使わないと<code>setAngles</code>関数のオーバーロードは2種類では済まず、具体的に言うと(第一引数、第二引数、第三引数がいずれも2種類の型を取るので)8個ほど必要だったことがうかがい知れます。<code>QiDynamic</code>を用いた関数定義はオーバーロードの個数爆発を防ぐうえで重要であると言えます。</p>
+<p><br/>
+実際に<code>QiDynamic</code>型の変数を作成する例をいくつか試しましょう。</p>
+<p>第一に、もっとも標準的な方法として、既存の<code>QiAnyValue</code>派生型変数に対して<code>ToDynamic</code>拡張メソッドを呼び出すと<code>QiDynamic</code>でラップされた変数を取得できます。簡単なコードは次のようなものです。</p>
+<pre><code class="csharp">QiString s = new QiString(&quot;Hello!&quot;);
+QiDynamic d = s.ToDynamic();
+
+Console.WriteLine(s.Dump());
+Console.WriteLien(d.Dump());
+</code></pre>
+
+<p>出力例です。</p>
+<pre><code>QiString:Hello!
+Dynamic
+  QiString:Hello!
+</code></pre>
+
+<p><br/>
+もとの文字列が<code>Dynamic</code>によって包み込まれたような形になることが分かります。拡張メソッドによる表現以外では下記のコンストラクタ</p>
+<pre><code class="csharp">public class QiDynamic : QiAnyValue
+{
+    public QiDynamic(QiAnyValue v) { /* .. */ }
+}
+</code></pre>
+
+<p><br/>
+これを利用する方法も簡潔です。上述した<a href="#3">暗黙の型変換</a>を用いることで、次のようなコードが記述できます。</p>
+<pre><code class="csharp">var d = new QiDynamic(42);
+Console.WriteLine(d.Dump());
+</code></pre>
+
+<p>出力です。</p>
+<pre><code>Dynamic
+  QiInt:42
+</code></pre>
+
+<p><code>42</code>は<code>int</code>型なので暗黙に<code>QiInt32</code>型へと変換され、これが<code>QiDynamic</code>によって包み込まれた値を生成します。</p>
 <p><br/><br/></p>
-<h2 id="6-qivaluevoid">6. QiValue.Void</h2>
+<h2 id="5-qivaluevoid">5. QiValue.Void</h2>
+<hr />
 <p><code>QiValue.Void</code>は<code>QiValue</code>クラスの静的プロパティです。<code>null</code>に近いような意味があり、<code>qi Framework</code>における関数の戻り値として「何も返さない」というのを表す値です。</p>
-<p>通常のプログラムではこの値を呼び出す必要はありません。例えば<code>ALTextToSpeech</code>の<code>say</code>関数は戻り値が無い関数ですが、これを呼び出すときは単に次のように記述すれば動作するため、<code>Call</code>関数の結果<code>QiValue.Void</code>相当の値であることを意識する必要はほとんどありません。</p>
+<p>通常のプログラムではこの値を意識する必要はありません。例えばロボットに発話させるための<code>ALTextToSpeech::say</code>関数は戻り値が無い関数ですが、これを呼び出すコードは次の通りです。</p>
 <pre><code class="csharp">var tts = session.GetService(&quot;ALTextToSpeech&quot;);
 tts[&quot;say&quot;].Call(&quot;Hello.&quot;);
 </code></pre>
 
 <p><br/>
-ただし<a href="../../tutorials/create_service/"><strong>サービスを自作する</strong></a>際には戻り値が無い関数を定義したい場合があり、<code>QiValue.Void</code>はこのような状況に対して用います。これについてはチュートリアルで例を確認してください。</p>
+通常は上のように、戻り値が<code>void</code>な関数ではそもそも<code>Call</code>関数の結果を取得しません。もし戻り値が<code>Void</code>な値であることを念入りに確認したい場合、例えば次のようにします。</p>
+<pre><code class="csharp">var tts = session.GetService(&quot;ALTextToSpeech&quot;);
+var res = tts[&quot;say&quot;].Call(&quot;Hello.&quot;);
+bool isVoid = (res.ContentValueKind == QiValueKind.QiVoid);
+</code></pre>
+
+<p><br/>
+以上が通常のケースにおける処理です。ただし<a href="../../tutorials/create_service/"><strong>サービスを自作する</strong></a>際には戻り値が無い関数を定義したい場合があり、<code>QiValue.Void</code>はこのような状況で用います。</p>
+<pre><code class="csharp">var objBuilder = QiObjectBuilder.Create();
+objBuilder.AdvertiseMethod(&quot;test::v()&quot;, (sig, arg) =&gt;
+{
+    Console.WriteLine(&quot;test was called&quot;);
+    return QiValue.Void;
+});
+</code></pre>
+
+<p><br/>
+なお、このようなパターンは比較的よく採用されるパターンで、.NETアプリケーションの例で言うとデータバインディング時に「何もしない」というアクションを示すための<a href="https://msdn.microsoft.com/ja-jp/library/system.windows.data.binding.donothing%28v=vs.110%29.aspx"><code>Binding.Nothing</code></a>フィールドなどが近い性質を持っています。</p>
               
             </div>
           </div>
@@ -406,10 +516,10 @@ tts[&quot;say&quot;].Call(&quot;Hello.&quot;);
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../troubles/" class="btn btn-neutral float-right" title="困ったときに: 低レイヤAPI">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../containers/" class="btn btn-neutral float-right" title="コンテナ型">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../tutorials/create_service/" class="btn btn-neutral" title="サービスの自作"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../tutorials/work_with_unityengine/" class="btn btn-neutral" title="Unityとの連携"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -435,10 +545,10 @@ tts[&quot;say&quot;].Call(&quot;Hello.&quot;);
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../tutorials/create_service/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../tutorials/work_with_unityengine/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../troubles/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../containers/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
